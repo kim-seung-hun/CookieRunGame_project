@@ -4,9 +4,9 @@ let ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const gravity = 0.5;
+const gravity = 0.1;
 
-let runCharacter = new Array();
+let runPlayer = new Array();
 let imglink = [
   "images/Run/Run1.png",
   "images/Run/Run2.png",
@@ -14,11 +14,11 @@ let imglink = [
   "images/Run/Run4.png",
 ];
 for (let i = 0; i < 4; i++) {
-  runCharacter.push(new Image());
-  runCharacter[i].src = imglink[i];
+  runPlayer.push(new Image());
+  runPlayer[i].src = imglink[i];
 }
 
-let character = {
+let player = {
   x: 10,
   y: 200,
   width: 96,
@@ -39,7 +39,7 @@ let character = {
     ctx.fillStyle = "green";
     ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(
-      runCharacter[this.index],
+      runPlayer[this.index],
       this.x,
       this.y,
       this.width,
@@ -47,13 +47,15 @@ let character = {
     );
   },
   update() {
+    this.draw();
     this.y += this.yspeed;
+    this.yspeed += gravity;
   },
 };
 
-let imgCharacter = new Image();
-imgCharacter.src = "images/Run/Run1.png";
-// console.log(imgCharacter);
+let imgPlayer = new Image();
+imgPlayer.src = "images/Run/Run1.png";
+// console.log(imgPlayer);
 
 let imgSesame = new Image();
 imgSesame.src = "images/깻잎.png";
@@ -109,19 +111,19 @@ function game() {
   //     o.splice(i, 1);
   //   }
   //   a.x--;
-  //   collision(character, a);
+  //   collision(player, a);
   //   a.draw();
   // });
 
   //점프기능
   if (jump == true) {
-    character.y -= 3;
+    player.y -= 3;
     jumpTimer++;
-    imgCharacter.src = "images/Run/Run3.png";
+    imgPlayer.src = "images/Run/Run3.png";
   }
   if (jump == false) {
-    if (character.y < 200) {
-      character.y++;
+    if (player.y < 200) {
+      player.y++;
     }
   }
   if (jumpTimer > 50) {
@@ -129,12 +131,12 @@ function game() {
     jumpTimer = 0;
   }
 
-  if (character.y == 200) {
-    imgCharacter.src = "images/Run/Run1.png";
+  if (player.y == 200) {
+    imgPlayer.src = "images/Run/Run1.png";
   }
 
   //캐릭터 그리기, 점수 그리기
-  character.update();
+  player.update();
   // drawScore.draw();
 }
 
@@ -142,9 +144,9 @@ function game() {
 game();
 
 //충돌확인
-function collision(character, hurdle) {
-  let xMinus = hurdle.x - (character.x + character.width);
-  let yMinus = hurdle.y - (character.y + character.height);
+function collision(player, hurdle) {
+  let xMinus = hurdle.x - (player.x + player.width);
+  let yMinus = hurdle.y - (player.y + player.height);
   if (xMinus < 0 && yMinus < 0) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     cancelAnimationFrame(animation);
@@ -153,7 +155,7 @@ function collision(character, hurdle) {
 
 //스페이스바 입력시 점프
 document.addEventListener("keydown", function (e) {
-  if (e.code === "Space" && character.y == 200) {
+  if (e.code === "Space" && player.y == 200) {
     jump = true;
   }
 });
