@@ -57,7 +57,7 @@ imgSesame.src = "images/깻잎.png";
 class Hurdle {
   constructor() {
     this.x = 700;
-    this.y = 200;
+    this.y = 250;
     this.width = 70;
     this.height = 70;
   }
