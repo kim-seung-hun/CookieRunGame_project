@@ -14,24 +14,27 @@ let imglink = [
 for (let i = 0; i < 4; i++) {
   runCharacter.push(new Image());
   runCharacter[i].src = imglink[i];
-  console.log(runCharacter[i]);
+  //console.log(runCharacter[i]);
 }
 
 console.log(runCharacter);
 let cat = {
   x: 10,
   y: 200,
-  width: 120,
-  height: 135,
+  width: 96,
+  height: 108,
   index: 0,
+  speed: 30,
+  time: 0,
   draw() {
-    if (this.index < 3) {
-      this.index++;
-    } else {
-      this.index = 0;
+    this.time++;
+    if (this.time % this.speed === 0) {
+      if (this.index < 3) {
+        this.index++;
+      } else {
+        this.index = 0;
+      }
     }
-    // console.log(runCharacter);
-    // console.log(this.index);
     // ctx.fillStyle = "green";
     // ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(
