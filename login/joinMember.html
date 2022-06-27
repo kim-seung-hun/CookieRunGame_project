@@ -155,14 +155,14 @@
         } else if (id == "") {
           document.querySelector(".emailcheck").innerHTML = "";
           document.querySelector(".checkbtn_disable").disablsed = true;
-          document.querySelector(".checkbtn_disable").classList.add("checkbtn_disable");
+          document.querySelector(".checkbtn_disable").classList.remove("checkbtn_able");
           a = 0;
           console.log(a);
         } else {
           document.querySelector(".emailcheck").innerHTML =
             "이메일을 입력하세요 ex)rudghks0981@gmail.com";
             document.querySelector(".checkbtn_disable").disabled = true;
-            document.querySelector(".checkbtn_disable").classList.add("checkbtn_disable");
+            document.querySelector(".checkbtn_disable").classList.remove("checkbtn_able");
           a = 0;
           console.log(a);
         }
@@ -170,7 +170,7 @@
       document.querySelector("#password").onkeyup = function () {
         let password = this.value;
         let passwordreg =
-          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/g;
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/g;
         if (passwordreg.test(password)) {
           document.querySelector(".passwordcheck").innerHTML = "";
           b = 1;
@@ -205,7 +205,7 @@
       };
       document.querySelector("#name").onkeyup = function () {
         let name = this.value;
-        let namereg = /^[가-힣]{2,}$/g;
+        let namereg = /^[가-힣]{2,6}$/g;
         if (namereg.test(name)) {
           document.querySelector(".namecheck").innerHTML = "";
           d = 1;
@@ -243,7 +243,8 @@
       console.log(sum_);
       window.onkeyup = function () {
         console.log(idAble);
-        if (a == 1 && b == 1 && c == 1 && d == 1 && e == 1 && idAble === 1) {
+        // 서버통신을 위해 <&& idAble === 1> 추가해야함
+        if (a == 1 && b == 1 && c == 1 && d == 1 && e == 1) {
           document.querySelector(".btn").disabled = false;
         } else {
           document.querySelector(".btn").disabled = true;

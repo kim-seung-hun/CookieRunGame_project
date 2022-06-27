@@ -57,13 +57,14 @@
   margin-top: 5px;
   margin-right: 3px;
   justify-content: space-between;
-  background-color: black;
-  color: white;
+  background-color: rgb(48, 46, 46);
+  color: rgb(250, 246, 246);
   border-radius: 5px;
   width: 30%;
   height: 40px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 .phoneNum {
@@ -96,12 +97,12 @@
 }
 
 .btn {
-  font-size: medium;
+  font-size: 15px;
   margin-top: 30px;
-  background-color: #f8f4f4;
-  color: #3a3838;
+  background-color: rgba(9, 49, 226, 0.712);
+  color: beige;
   border-radius: 5px;
-  width: 40%;
+  width: 50%;
   height: 50px;
   font-weight: 1000;
   cursor: pointer;
