@@ -4,8 +4,10 @@ let ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+//중력설정
 const gravity = 0.1;
 
+//플레이어 이미지 프레임변경
 let runPlayer = new Array();
 let imglink = [
   "images/Run/Run1.png",
@@ -18,6 +20,7 @@ for (let i = 0; i < 4; i++) {
   runPlayer[i].src = imglink[i];
 }
 
+//플레이어 설정
 let player = {
   x: 10,
   y: 200,
@@ -53,13 +56,16 @@ let player = {
   },
 };
 
+//플레이어 기본 이미지
 let imgPlayer = new Image();
 imgPlayer.src = "images/Run/Run1.png";
 // console.log(imgPlayer);
 
+//장애물 기본 이미지
 let imgSesame = new Image();
 imgSesame.src = "images/깻잎.png";
 
+//장애물 클래스
 class Hurdle {
   constructor() {
     this.x = 700;
@@ -87,6 +93,7 @@ class Hurdle {
 //   },
 // };
 
+//전역변수
 let timer = 0;
 let hurdleUnit = [];
 let jumpTimer = 0;
@@ -101,6 +108,7 @@ function game() {
   //장애물 삭제
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  //장애물을 배열에 놓고 배출
   // if (timer % 270 === 0) {
   //   let hurdle = new Hurdle();
   //   hurdleUnit.push(hurdle);
@@ -116,21 +124,24 @@ function game() {
   // });
 
   //점프기능
+  //점프시 점프값 증가 & 이미지 변경
   if (jump == true) {
     player.y -= 3;
     jumpTimer++;
     imgPlayer.src = "images/Run/Run3.png";
   }
+  //점프 상태 아닐시 y값 증가로 제자리로 돌아감
   if (jump == false) {
     if (player.y < 200) {
       player.y++;
     }
   }
+  //점프값이 50 넘어가면 점프 끝
   if (jumpTimer > 50) {
     jump = false;
     jumpTimer = 0;
   }
-
+  //점프 끝난 후 다시 원래 이미지로
   if (player.y == 200) {
     imgPlayer.src = "images/Run/Run1.png";
   }
