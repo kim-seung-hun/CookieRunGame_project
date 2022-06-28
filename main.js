@@ -1,19 +1,19 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = 700;
+canvas.height = 500;
 
 //중력설정
-const gravity = 0.1;
+const gravity = 0.05;
 
 //플레이어 이미지 프레임변경
 let runPlayer = new Array();
 let imglink = [
-  "images/Run/Run1.png",
-  "images/Run/Run2.png",
-  "images/Run/Run3.png",
-  "images/Run/Run4.png",
+  "images/Character/Taehoon/Run/Run1.png",
+  "images/Character/Taehoon/Run/Run2.png",
+  "images/Character/Taehoon/Run/Run3.png",
+  "images/Character/Taehoon/Run/Run4.png",
 ];
 for (let i = 0; i < 4; i++) {
   runPlayer.push(new Image());
@@ -23,7 +23,7 @@ for (let i = 0; i < 4; i++) {
 //플레이어 설정
 let player = {
   x: 10,
-  y: 200,
+  y: 300,
   width: 96,
   height: 108,
   yspeed: 1,
@@ -33,7 +33,7 @@ let player = {
   draw() {
     this.time++;
     if (this.time % this.speed === 0) {
-      if (this.index < 3) {
+      if (this.index < 4) {
         this.index++;
       } else {
         this.index = 0;
@@ -52,13 +52,16 @@ let player = {
   update() {
     this.draw();
     this.y += this.yspeed;
-    this.yspeed += gravity;
+
+    if (this.y + this.height + this.yspeed <= canvas.height) {
+      this.yspeed += gravity;
+    } else this.yspeed = 0;
   },
 };
 
 //플레이어 기본 이미지
 let imgPlayer = new Image();
-imgPlayer.src = "images/Run/Run1.png";
+imgPlayer.src = "images/Character/Taehoon/Run/Run1.png";
 // console.log(imgPlayer);
 
 //장애물 기본 이미지
@@ -66,19 +69,17 @@ let imgSesame = new Image();
 imgSesame.src = "images/깻잎.png";
 
 //장애물 클래스
-class Hurdle {
-  constructor() {
-    this.x = 700;
-    this.y = 250;
-    this.width = 70;
-    this.height = 70;
-  }
+let hurdle = {
+  x: 50,
+  y: 350,
+  width: 250,
+  height: 50,
   draw() {
     ctx.fillStyle = "yellow";
     ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(imgSesame, this.x, this.y, this.width, this.height);
-  }
-}
+  },
+};
 
 //점수표
 // let drawScore = {
@@ -123,12 +124,21 @@ function game() {
   //   a.draw();
   // });
 
+  if (
+    player.y + player.height <= hurdle.y &&
+    player.y + player.height + player.yspeed >= hurdle.y &&
+    player.x + player.width >= hurdle.x &&
+    player.x <= hurdle.x + hurdle.width
+  ) {
+    player.yspeed = 0;
+  }
+
   //점프기능
   //점프시 점프값 증가 & 이미지 변경
   if (jump == true) {
-    player.y -= 3;
+    player.y -= 7;
     jumpTimer++;
-    imgPlayer.src = "images/Run/Run3.png";
+    imgPlayer.src = "images/Character/Taehoon/Run/Run3.png";
   }
   //점프 상태 아닐시 y값 증가로 제자리로 돌아감
   if (jump == false) {
@@ -143,12 +153,13 @@ function game() {
   }
   //점프 끝난 후 다시 원래 이미지로
   if (player.y == 200) {
-    imgPlayer.src = "images/Run/Run1.png";
+    imgPlayer.src = "images/Character/Taehoon/Run/Run1.png";
   }
 
   //캐릭터 그리기, 점수 그리기
   player.update();
   // drawScore.draw();
+  hurdle.draw();
 }
 
 //실행
@@ -164,9 +175,23 @@ function collision(player, hurdle) {
   }
 }
 
-//스페이스바 입력시 점프
-document.addEventListener("keydown", function (e) {
-  if (e.code === "Space" && player.y == 200) {
-    jump = true;
+//키 코드 확인
+// addEventListener("keydown", function () {
+//   console.log(this.event);
+// });
+
+document.addEventListener("keydown", function (key) {
+  switch (key.code) {
+    case "Space":
+      jump = true;
+      break;
+
+    case "KeyA":
+      player.x -= 10;
+      break;
+
+    case "KeyD":
+      player.x += 10;
+      break;
   }
 });
