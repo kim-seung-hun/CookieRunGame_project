@@ -1,7 +1,7 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
-canvas.width = 700;
+canvas.width = 1500;
 canvas.height = 500;
 
 //중력설정
@@ -12,8 +12,8 @@ let runPlayer = new Array();
 let imglink = [
   "images/Character/Taehoon/Run/Run1.png",
   "images/Character/Taehoon/Run/Run2.png",
-  "images/Character/Taehoon/Run/Run3.png",
-  "images/Character/Taehoon/Run/Run4.png",
+  "images/Character/Taehoon/Slide/Slide1.png",
+  "images/Character/Taehoon/Slide/Slide2.png",
 ];
 for (let i = 0; i < 4; i++) {
   runPlayer.push(new Image());
@@ -23,17 +23,17 @@ for (let i = 0; i < 4; i++) {
 //플레이어 설정
 let player = {
   x: 10,
-  y: 300,
+  y: 10,
   width: 96,
   height: 108,
   yspeed: 1,
   index: 0,
-  speed: 30,
+  speed: 15,
   time: 0,
   draw() {
     this.time++;
     if (this.time % this.speed === 0) {
-      if (this.index < 4) {
+      if (this.index < 3) {
         this.index++;
       } else {
         this.index = 0;
@@ -52,7 +52,9 @@ let player = {
   update() {
     this.draw();
     this.y += this.yspeed;
+    this.yspeed += gravity;
 
+    //바닥에 캐릭터 닿으면 멈추기
     if (this.y + this.height + this.yspeed <= canvas.height) {
       this.yspeed += gravity;
     } else this.yspeed = 0;
@@ -60,8 +62,7 @@ let player = {
 };
 
 //플레이어 기본 이미지
-let imgPlayer = new Image();
-imgPlayer.src = "images/Character/Taehoon/Run/Run1.png";
+// let imgPlayer = new Image();
 // console.log(imgPlayer);
 
 //장애물 기본 이미지
@@ -69,17 +70,24 @@ let imgSesame = new Image();
 imgSesame.src = "images/깻잎.png";
 
 //장애물 클래스
-let hurdle = {
-  x: 50,
-  y: 350,
-  width: 250,
-  height: 50,
+class Hurdle {
+  constructor({ x, y, width, height }) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
   draw() {
     ctx.fillStyle = "yellow";
     ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(imgSesame, this.x, this.y, this.width, this.height);
-  },
-};
+  }
+}
+
+const hurdle = [
+  new Hurdle({ x: 750, y: 350, width: 150, height: 70 }),
+  new Hurdle({ x: 950, y: 250, width: 150, height: 70 }),
+];
 
 //점수표
 // let drawScore = {
@@ -96,7 +104,6 @@ let hurdle = {
 
 //전역변수
 let timer = 0;
-let hurdleUnit = [];
 let jumpTimer = 0;
 let jump = false;
 let animation;
@@ -106,46 +113,41 @@ function game() {
   animation = requestAnimationFrame(game);
   timer++;
 
-  //장애물 삭제
+  //전체 영역 클리어
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  //장애물을 배열에 놓고 배출
-  // if (timer % 270 === 0) {
-  //   let hurdle = new Hurdle();
-  //   hurdleUnit.push(hurdle);
-  // }
-
-  // hurdleUnit.forEach((a, i, o) => {
-  //   if (a.x < 0) {
-  //     o.splice(i, 1);
-  //   }
-  //   a.x--;
-  //   collision(player, a);
-  //   a.draw();
-  // });
-
-  if (
-    player.y + player.height <= hurdle.y &&
-    player.y + player.height + player.yspeed >= hurdle.y &&
-    player.x + player.width >= hurdle.x &&
-    player.x <= hurdle.x + hurdle.width
-  ) {
-    player.yspeed = 0;
+  //장애물 배출
+  if (timer % 2 === 0) {
+    hurdle.forEach((a, i, o) => {
+      if (a.x < 0) {
+        o.splice(i, 1);
+      }
+      // collision(player, a);
+      a.x -= 2;
+      a.draw();
+    });
   }
+  console.log(hurdle);
+
+  //장애물 올라타기
+  hurdle.forEach((Hurdle) => {
+    if (
+      player.y + player.height <= Hurdle.y &&
+      player.y + player.height + player.yspeed >= Hurdle.y &&
+      player.x + player.width >= Hurdle.x &&
+      player.x <= Hurdle.x + Hurdle.width
+    ) {
+      player.yspeed = 0;
+    }
+  });
 
   //점프기능
   //점프시 점프값 증가 & 이미지 변경
   if (jump == true) {
     player.y -= 7;
     jumpTimer++;
-    imgPlayer.src = "images/Character/Taehoon/Run/Run3.png";
   }
-  //점프 상태 아닐시 y값 증가로 제자리로 돌아감
-  if (jump == false) {
-    if (player.y < 200) {
-      player.y++;
-    }
-  }
+
   //점프값이 50 넘어가면 점프 끝
   if (jumpTimer > 50) {
     jump = false;
@@ -153,27 +155,28 @@ function game() {
   }
   //점프 끝난 후 다시 원래 이미지로
   if (player.y == 200) {
-    imgPlayer.src = "images/Character/Taehoon/Run/Run1.png";
   }
 
   //캐릭터 그리기, 점수 그리기
   player.update();
   // drawScore.draw();
-  hurdle.draw();
+  hurdle.forEach((Hurdle) => {
+    Hurdle.draw();
+  });
 }
 
 //실행
 game();
 
 //충돌확인
-function collision(player, hurdle) {
-  let xMinus = hurdle.x - (player.x + player.width);
-  let yMinus = hurdle.y - (player.y + player.height);
-  if (xMinus < 0 && yMinus < 0) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    cancelAnimationFrame(animation);
-  }
-}
+// function collision(player, Hurdle) {
+//   let xMinus = Hurdle.x - (player.x + player.width);
+//   let yMinus = Hurdle.y - (player.y + player.height);
+//   if (xMinus < 0 && yMinus < 0) {
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     cancelAnimationFrame(animation);
+//   }
+// }
 
 //키 코드 확인
 // addEventListener("keydown", function () {
