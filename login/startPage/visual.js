@@ -18,7 +18,7 @@ export class Visual {
   }
 
   show(stageWidth, stageHeight) {
-    this.pos = this.text.setText("Cookie Run", 30, stageWidth, stageHeight);
+    this.pos = this.text.setText("Cookie Run", 10, stageWidth, stageHeight);
     this.posTotal = this.pos.length - 1;
   }
 
