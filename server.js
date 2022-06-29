@@ -1,8 +1,8 @@
 const express = require('express') // 설치한 익스프레스 라이브러리 사용 할게요
 const app = express(); // 익스프레스 라이브러리를 앱이란 객체로 만들게요 이해하고 쓸 필요 없다함
-const mysql = require('mysql');
+const mysql = require('mysql'); // 마이에스큐엘 라이브러리를 사용하겠다는 문구
 // const body = require('body-parser'); // 
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser'); // 
 
 const connection = mysql.createConnection({
     host: 'localhost',
