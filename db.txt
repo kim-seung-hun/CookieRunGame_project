@@ -1,6 +1,10 @@
 select count(*) from members where id='rudghks09@naver.com';
 
-
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+|  id pw age name         |
+|   rudghks09 rudghks1110 23 rlarudhgk        |
+|           |
+-------------
 카운트
 
 
