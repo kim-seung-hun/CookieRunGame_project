@@ -5,7 +5,7 @@ let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
 //캔버스 크기
-canvas.width = 4000;
+canvas.width = 1000;
 canvas.height = 600;
 
 //중력설정
@@ -212,6 +212,11 @@ document.addEventListener("keydown", function (key) {
   switch (key.code) {
     case "Space":
       jump = true;
+      if (isSliding) {
+        isSliding = false;
+        player.state = "run";
+        player.height = 108;
+      }
       break;
 
     case "KeyA":
@@ -226,8 +231,6 @@ document.addEventListener("keydown", function (key) {
       player.state = "slide";
       player.height = 65;
 
-      console.log(player.y);
-
       if (!isSliding) {
         player.y = player.y + 43;
         isSliding = true;
@@ -240,11 +243,18 @@ document.addEventListener("keyup", function (key) {
   switch (key.code) {
     case "ArrowDown":
       player.state = "run";
-      if (isSliding) {
+      if (isSliding && jump == true) {
+        isSliding = false;
+        player.height = 108;
+      } else if (isSliding && player.state == "run") {
         player.y = player.y - 43;
         isSliding = false;
+        player.height = 108;
+      } else if (!isSliding && player.state == "run") {
+        isSliding = false;
+        player.height = 108;
       }
-      player.height = 108;
+
       break;
   }
 });
