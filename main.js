@@ -1,35 +1,50 @@
+// import { canvasMap } from "./map.js";
+
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
-canvas.width = 1500;
-canvas.height = 500;
+canvas.width = 4000;
+canvas.height = 600;
 
 //중력설정
-const gravity = 0.05;
+const gravity = 0.03;
 
 //플레이어 이미지 프레임변경
 let runPlayer = new Array();
-let imglink = [
+let imglinkRun = [
   "images/Character/Taehoon/Run/Run1.png",
   "images/Character/Taehoon/Run/Run2.png",
+  "images/Character/Taehoon/Run/Run3.png",
+  "images/Character/Taehoon/Run/Run4.png",
+];
+for (let i = 0; i < 4; i++) {
+  runPlayer.push(new Image());
+  runPlayer[i].src = imglinkRun[i];
+}
+
+let slidePlayer = new Array();
+let imglinkSlide = [
+  "images/Character/Taehoon/Slide/Slide1.png",
+  "images/Character/Taehoon/Slide/Slide2.png",
   "images/Character/Taehoon/Slide/Slide1.png",
   "images/Character/Taehoon/Slide/Slide2.png",
 ];
 for (let i = 0; i < 4; i++) {
-  runPlayer.push(new Image());
-  runPlayer[i].src = imglink[i];
+  slidePlayer.push(new Image());
+  slidePlayer[i].src = imglinkSlide[i];
 }
 
 //플레이어 설정
 let player = {
-  x: 10,
-  y: 10,
+  x: 100,
+  y: 392,
   width: 96,
   height: 108,
   yspeed: 1,
   index: 0,
   speed: 15,
   time: 0,
+  state: "run",
   draw() {
     this.time++;
     if (this.time % this.speed === 0) {
@@ -42,7 +57,7 @@ let player = {
     ctx.fillStyle = "green";
     ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(
-      runPlayer[this.index],
+      this.state == "run" ? runPlayer[this.index] : slidePlayer[this.index],
       this.x,
       this.y,
       this.width,
@@ -55,7 +70,7 @@ let player = {
     this.yspeed += gravity;
 
     //바닥에 캐릭터 닿으면 멈추기
-    if (this.y + this.height + this.yspeed <= canvas.height) {
+    if (this.y + this.height + this.yspeed <= canvas.height - 100) {
       this.yspeed += gravity;
     } else this.yspeed = 0;
   },
@@ -127,7 +142,7 @@ function game() {
       a.draw();
     });
   }
-  console.log(hurdle);
+  // console.log(hurdle);
 
   //장애물 올라타기
   hurdle.forEach((Hurdle) => {
@@ -179,9 +194,11 @@ game();
 // }
 
 //키 코드 확인
-// addEventListener("keydown", function () {
-//   console.log(this.event);
-// });
+addEventListener("keydown", function () {
+  console.log(this.event);
+});
+
+let isSliding = false;
 
 document.addEventListener("keydown", function (key) {
   switch (key.code) {
@@ -195,6 +212,31 @@ document.addEventListener("keydown", function (key) {
 
     case "KeyD":
       player.x += 10;
+      break;
+
+    case "ArrowDown":
+      player.state = "slide";
+      player.height = 65;
+
+      console.log(player.y);
+
+      if (!isSliding) {
+        player.y = player.y + 43;
+        isSliding = true;
+      }
+      break;
+  }
+});
+
+document.addEventListener("keyup", function (key) {
+  switch (key.code) {
+    case "ArrowDown":
+      player.state = "run";
+      if (isSliding) {
+        player.y = player.y - 43;
+        isSliding = false;
+      }
+      player.height = 108;
       break;
   }
 });
