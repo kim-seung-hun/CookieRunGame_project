@@ -1,1 +1,4 @@
 node_modules
+email.js
+*.json
+server2.js
