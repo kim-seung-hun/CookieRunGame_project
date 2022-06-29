@@ -7,22 +7,29 @@
     <title>cat mario</title>
     <link rel="stylesheet" href="login.css" />
   </head>
+  <!-- bg : 배경화면 결정 >> 쿠키런 play 영상 재생 -->
   <body id="bg">
+    <!-- 게임 제목 -->
     <div id="header">달려라 쿠키야</div>
+    <!-- loogin 및 ranking Main div 생성 -->
     <div id="logBody">
+      <!-- loogin position 구성할 div 생성-->
       <div id="logBodyLeft">
+        <!-- loogin content1 -->
         <div class="login">
           <h3 class="log_id">
             <label for="id">아이디</label>
           </h3>
           <input class="user_id" type="text" maxlength="20" />
         </div>
+        <!-- loogin content2 -->
         <div class="login">
           <h3 class="log_pw">
             <label for="id">비밀번호</label>
           </h3>
           <input class="user_pw" type="password" maxlength="20" />
         </div>
+        <!-- loogin content3 -->
         <div class="log_btn1">
           <div class="log_btn-outline">
             <button class="log_btn2">로그인</button>
@@ -31,6 +38,7 @@
             <button class="logout_btn">로그아웃</button>
           </div>
         </div>
+        <!-- loogin content4 -->
         <div id="joinFind">
           <a
             href="http://127.0.0.1:5500/login/joinPage/joinMember.html"
@@ -40,6 +48,7 @@
           <a href=""><span>ID/PW 찾기</span></a>
         </div>
       </div>
+      <!-- ranking 화면 구성할 div 생성 -->
       <div id="logBodyRight"></div>
     </div>
   </body>
