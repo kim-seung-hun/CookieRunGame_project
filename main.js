@@ -1,8 +1,10 @@
 // import { canvasMap } from "./map.js";
 
+//캔버스 변수 선언, 할당
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
+//캔버스 크기
 canvas.width = 4000;
 canvas.height = 600;
 
@@ -76,10 +78,6 @@ let player = {
   },
 };
 
-//플레이어 기본 이미지
-// let imgPlayer = new Image();
-// console.log(imgPlayer);
-
 //장애물 기본 이미지
 let imgSesame = new Image();
 imgSesame.src = "images/깻잎.png";
@@ -125,23 +123,24 @@ let animation;
 
 //게임실행
 function game() {
-  animation = requestAnimationFrame(game);
+  requestAnimationFrame(game);
   timer++;
 
   //전체 영역 클리어
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   //장애물 배출
-  if (timer % 2 === 0) {
-    hurdle.forEach((a, i, o) => {
-      if (a.x < 0) {
-        o.splice(i, 1);
-      }
-      // collision(player, a);
-      a.x -= 2;
-      a.draw();
-    });
-  }
+
+  // hurdle.forEach((a, i, o) => {
+  //   a.draw();
+  //   a.x -= 3;
+
+  //   if (a.x < 0) {
+  //     o.splice(i, 1);
+  //   }
+  //   // collision(player, a);
+  // });
+
   // console.log(hurdle);
 
   //장애물 올라타기
@@ -172,12 +171,21 @@ function game() {
   if (player.y == 200) {
   }
 
-  //캐릭터 그리기, 점수 그리기
+  //캐릭터 그리기, 점수 그리기, 장애물 그리기
   player.update();
   // drawScore.draw();
-  hurdle.forEach((Hurdle) => {
-    Hurdle.draw();
-  });
+  // hurdle.forEach((a, i, o) => {
+  //   a.draw();
+  //   a.x -= 3;
+
+  //   if (a.x < 0) {
+  //     o.splice(i, 1);
+  //     hurdle.push(
+  //       new Hurdle({ x: 750, y: 350, width: 150, height: 70 }),
+  //       new Hurdle({ x: 950, y: 250, width: 150, height: 70 })
+  //     );
+  //   }
+  // });
 }
 
 //실행
