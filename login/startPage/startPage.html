@@ -11,6 +11,28 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
   </head>
-  <body></body>
+  <body>
+    <a
+      href="http://127.0.0.1:5500/login/loginPage/login.html"
+      onclick="window.open(this.href,'로그인페이지'); return false;"
+      id="pageMove"
+    >
+      <div id="workarea">
+        <div class="svg-wrapper">
+          <svg height="100px" width="300px" xmlns="http://www.w3.org/2000/svg">
+            <rect id="shape" height="100px" width="300px" />
+            <div id="text">
+              <span class="spot">Login</span>
+            </div>
+          </svg>
+        </div>
+      </div>
+    </a>
+  </body>
   <script type="module" src="app.js"></script>
+  <script>
+    window.addEventListener("mouseover", function () {
+      document.querySelector("#hidden").classList.add("zIndex");
+    });
+  </script>
 </html>

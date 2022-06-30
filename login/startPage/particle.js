@@ -4,7 +4,7 @@ const MOVE_SPEED = 0.88;
 export class Particle {
   constructor(pos, color) {
     this.color = color;
-    this.maxRadius = Math.random() * 10;
+    this.maxRadius = Math.random() * 10 + 4;
 
     this.savedX = pos.x;
     this.savedY = pos.y;
