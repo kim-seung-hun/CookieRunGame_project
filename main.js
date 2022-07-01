@@ -9,35 +9,6 @@ canvas.height = 600;
 //중력설정
 const gravity = 0.009;
 
-let canvasMap = document.getElementById("map");
-let ctxMap = canvasMap.getContext("2d");
-
-canvasMap.width = 2000;
-canvasMap.height = 600;
-
-//맵 그리기
-let firstMap = {
-  x: 0,
-  y: 0,
-  width: 2000,
-  height: 600,
-  time: 0,
-  a: 1,
-  draw() {
-    this.time++;
-    if (this.time % 100 == 0) {
-      this.a -= 0.1;
-    }
-    this.x -= 0.05;
-    ctxMap.globalAlpha = this.a;
-
-    ctxMap.drawImage(firstMapImg, this.x, this.y, this.width, this.height);
-  },
-};
-
-let firstMapImg = new Image();
-firstMapImg.src = "images/Map/firstmap.png";
-
 //플레이어 이미지 프레임변경
 //달리기 이미지
 let runPlayer = new Array();
@@ -150,8 +121,8 @@ class Jelly {
   }
 }
 
-let testJelly1 = new Jelly({ x: 750, y: 350, width: 100, height: 100 });
-let testJelly2 = new Jelly({ x: 950, y: 250, width: 100, height: 100 });
+let testJelly1 = new Jelly({ x: 750, y: 250, width: 100, height: 100 });
+let testJelly2 = new Jelly({ x: 1050, y: 450, width: 100, height: 100 });
 
 //점수선언
 let point = 0;
@@ -174,6 +145,7 @@ let timer = 0;
 let jumpTimer = 0;
 let jump = false;
 let animation;
+let jellyEaten = false;
 
 //게임실행
 function game() {
@@ -182,7 +154,7 @@ function game() {
 
   //전체 영역 클리어
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+  ctxMap.clearRect(0, 0, canvasMap.width, canvasMap.width);
   //장애물 올라타기
   // hurdle.forEach((Hurdle) => {
   //   if (
@@ -216,10 +188,12 @@ function game() {
   }
 
   //맵그리기, 캐릭터 그리기, 점수 그리기, 젤리 그리기
+  background.draw();
   firstMap.draw();
   testJelly1.draw();
+  testJelly2.draw();
   jellyEat(player, testJelly1);
-  // jellyEat(player, testJelly2);
+  jellyEat(player, testJelly2);
   player.update();
 
   // jelly.forEach((Jelly, i, jellyArray) => {
@@ -235,19 +209,30 @@ function game() {
 //실행
 game();
 
-let jellyEaten = false;
-
 //젤리먹기 충돌체크
 function jellyEat(player, jelly) {
   let eatJellyX = jelly.x - (player.x + player.width);
-  let eatJellyY = jelly.y - (player.y + player.height);
-  if (eatJellyX < 0 && eatJellyY < 0 && jellyEaten == false) {
+  let eatJellyY = player.y - (jelly.y + jelly.width);
+  console.log(eatJellyX);
+  console.log(eatJellyY);
+  if (
+    eatJellyX < 30 &&
+    eatJellyX > -30 &&
+    eatJellyY < 30 &&
+    eatJellyY > -30 &&
+    jellyEaten == false
+  ) {
+    jellyEaten = true;
     ctx.clearRect(jelly.x, jelly.y, jelly.width, jelly.height);
     firstMap.draw();
-    point += 10000;
-    jellyEaten = true;
-    // console.log("실행");
+    if (jellyEaten == true) {
+      point += 10000;
+      eatJellyX = 0;
+    }
   }
+  // else if() {
+  //   jellyEaten = false;
+  // }
 }
 
 //키 코드 확인
