@@ -1,9 +1,6 @@
-// import { canvasMap } from "./map.js";
-
 //캔버스 변수 선언, 할당
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-let _ctx = canvas.getContext("2d");
 
 //캔버스 크기
 canvas.width = 2000;
@@ -11,6 +8,12 @@ canvas.height = 600;
 
 //중력설정
 const gravity = 0.009;
+
+let canvasMap = document.getElementById("map");
+let ctxMap = canvasMap.getContext("2d");
+
+canvasMap.width = 2000;
+canvasMap.height = 600;
 
 //맵 그리기
 let firstMap = {
@@ -23,16 +26,16 @@ let firstMap = {
   draw() {
     this.time++;
     if (this.time % 100 == 0) {
-      this.a -= 0.05;
+      this.a -= 0.1;
     }
-    _ctx.globalAlpha = this.a;
-    _ctx.drawImage(firstMapImg, this.x, this.y, this.width, this.height);
-
     this.x -= 0.05;
+    ctxMap.globalAlpha = this.a;
+
+    ctxMap.drawImage(firstMapImg, this.x, this.y, this.width, this.height);
   },
 };
-let firstMapImg = new Image();
 
+let firstMapImg = new Image();
 firstMapImg.src = "images/Map/firstmap.png";
 
 //플레이어 이미지 프레임변경
@@ -232,14 +235,17 @@ function game() {
 //실행
 game();
 
+let jellyEaten = false;
+
 //젤리먹기 충돌체크
 function jellyEat(player, jelly) {
   let eatJellyX = jelly.x - (player.x + player.width);
   let eatJellyY = jelly.y - (player.y + player.height);
-  if (eatJellyX < 0 && eatJellyY < 0) {
+  if (eatJellyX < 0 && eatJellyY < 0 && jellyEaten == false) {
     ctx.clearRect(jelly.x, jelly.y, jelly.width, jelly.height);
     firstMap.draw();
-
+    point += 10000;
+    jellyEaten = true;
     // console.log("실행");
   }
 }
