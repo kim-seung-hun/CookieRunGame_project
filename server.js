@@ -1,8 +1,13 @@
+//
 const express = require('express') // 설치한 익스프레스 라이브러리 사용 할게요
 const app = express(); // 익스프레스 라이브러리를 앱이란 객체로 만들게요 이해하고 쓸 필요 없다함
 const mysql = require('mysql'); // 마이에스큐엘 라이브러리를 사용하겠다는 문구
 // const body = require('body-parser'); // 
 const bodyParser = require('body-parser'); //
+const ejs = require('ejs');
+
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -31,7 +36,7 @@ app.get('/pet', function (req, res) {
     res.send ("펫 ㄴㅇㄹㅁㅇㄴㄹㅁ뷰티용품을 쇼핑할 수 있는 페이지 입니다.")
 })
 app.get('/', function (req, res) { // 경로에 / 한개만 적을 경우 홈페이지 같은 개념
-    res.sendFile(__dirname + "/views/signup.html")
+    res.render("signup.ejs")
 })
 
 app.post('/', (req, res) => {
@@ -78,11 +83,14 @@ app.post('/signUpPro', (req, res) => {
 
 app.get('/login', (req, res) => {
     const signupid = "select * from members order by registDate desc;"
-    res.sendFile(__dirname + "/views/login.html")
+    
     connection.query(signupid, (err, result) => {
         if (err) console.log('err');
-        else { res.send(result[0]) }
-        console.log(result)
+        else {
+            res.render(("login.ejs"), {
+                data: result[0]
+            });
+        }
     })
 })
 
