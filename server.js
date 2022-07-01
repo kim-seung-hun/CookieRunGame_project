@@ -1,4 +1,3 @@
-//
 const express = require('express') // 설치한 익스프레스 라이브러리 사용 할게요
 const app = express(); // 익스프레스 라이브러리를 앱이란 객체로 만들게요 이해하고 쓸 필요 없다함
 const mysql = require('mysql'); // 마이에스큐엘 라이브러리를 사용하겠다는 문구
@@ -8,20 +7,28 @@ const ejs = require('ejs');
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
-
+require("dotenv").config();
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password : 'rudghks110',
-    database: 'test'
+    host: process.env.db_host,
+    user: process.env.db_user,
+    password : process.env.db_password,
+    database: process.env.db_database
 });
+
+// console.log("DB_HOST:", process.env.DB_HOST);
+// console.log("DB_USER:", process.env.DB_USER);
+// console.log("DB_PASS:", process.env.DB_PASS);
+
 
 
 app.use(bodyParser());
 app.listen(8080, function () { // 첫번째 파라미터는 서버를 띄울 포트 넘버, 두번째는 띄운 후 실행할 함수
     
     console.log('8080 server start')
-    
+    console.log("DB_HOST:", process.env.db_host);
+    console.log("DB_USER:", process.env.db_user);
+    console.log("DB_PASS:", process.env.db_password);
+    console.log("DB_databases:", process.env.db_database);
 });
 
 //npm install -g nodemon = 이걸 설치안하면 변경사항이 있을 때 마다 node server.js 를 터미널에서 타이핑해서
