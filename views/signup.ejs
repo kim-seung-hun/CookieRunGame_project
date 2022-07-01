@@ -70,11 +70,15 @@
             <div class="overlay-container">
                 <div class="overlay">
                     <div class="overlay-panel overlay-right">
-                        <h1>로그인</h1>
-                        <p>이미 계정을 갖고 계신가요?</p>
-                        <button class="signup_btn" onclick="window.location='/login'">로그인</button>
-                        <br/>
-                        <button class="signup_btn" onclick="window.location='/'">홈</button>
+                        <% if (data=='noCookie'){ %>
+                            <h1>로그인</h1>
+                            <p>이미 계정을 갖고 계신가요?</p>
+                            <button class="signup_btn" onclick="window.location='/login'">로그인</button>
+                            <br/>
+                            <button class="signup_btn" onclick="window.location='/'">홈</button>
+                        <% } else { %>
+                            <button>logout</button>
+                        <% } %>
                     </div>
                 </div>
             </div>

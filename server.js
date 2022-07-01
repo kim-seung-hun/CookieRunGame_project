@@ -7,6 +7,7 @@ const ejs = require('ejs');
 const dotenv = require('dotenv');
 require("dotenv").config();
 const PORT = process.env.PORT;
+const cookieParser = require('cookie-parser');
 
 // const config = dotenv.parse(buf)
 
@@ -20,10 +21,9 @@ const connection = mysql.createConnection({
 });
 console.log(process.env.PORT)
 app.use(bodyParser());
+app.use(cookieParser());
 app.listen(PORT, function () { // 첫번째 파라미터는 서버를 띄울 포트 넘버, 두번째는 띄운 후 실행할 함수
     console.log(PORT+'server start')
-    
-    
 });
 
 //npm install -g nodemon = 이걸 설치안하면 변경사항이 있을 때 마다 node server.js 를 터미널에서 타이핑해서
@@ -38,11 +38,23 @@ app.get('/pet', function (req, res) {
     res.send ("펫 ㄴㅇㄹㅁㅇㄴㄹㅁ뷰티용품을 쇼핑할 수 있는 페이지 입니다.")
 })
 app.get('/', function (req, res) { // 경로에 / 한개만 적을 경우 홈페이지 같은 개념
-    res.render("signup.ejs")
+    console.log(req.headers.cookie)
+    if (req.header.cookie !== 'undefined') { 
+        res.render("signup.ejs", {
+            data: 'hasCookie'
+        })
+    } else {
+        res.render("signup.ejs", {
+            data: "noCookie"
+        })
+    }
 })
 
 app.post('/', (req, res) => {
     //console.log(req.body.id); // req요청 중에 id라는 이름으로 보냈을 때 req.body.id에 담긴다. == 요청한 id 값 js90번째 
+
+    
+
     let dbdb = {}
     dbdb[process.env.dbID] = req.body.id;
     console.log(dbdb);
@@ -116,6 +128,10 @@ app.post('/login', (req, res) => {
             }
             else {
                 console.log('login suc')
+                res.cookie('user', req.body.id, { // user 라는 이름 및 req.body.id 라는 값을 가진 쿠키 발급 중괄호 안은 속성 부여
+                    httpOnly: true, // 자바 스크립트에서 document.cookie 시 확인되지 않음
+                    expires: new Date(Date.now() + 1000*60*60) // 쿠키 발급 후 얼마나 쿠키를 가지고 있을 지
+                })
                 res.send('loginsuc')
             }
         }
