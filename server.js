@@ -8,7 +8,7 @@ const dotenv = require('dotenv');
 require("dotenv").config();
 const PORT = process.env.PORT;
 const cookieParser = require('cookie-parser');
-
+const bcrypt = require('bcrypt')
 // const config = dotenv.parse(buf)
 
 app.set('view engine', 'ejs');
@@ -39,13 +39,13 @@ app.get('/pet', function (req, res) {
 })
 app.get('/', function (req, res) { // 경로에 / 한개만 적을 경우 홈페이지 같은 개념
     console.log(req.headers.cookie)
-    if (req.header.cookie !== 'undefined') { 
+    if (req.headers.cookie == undefined) { 
         res.render("signup.ejs", {
-            data: 'hasCookie'
+            data: 'noCookie'
         })
     } else {
         res.render("signup.ejs", {
-            data: "noCookie"
+            data: "hasCookie"
         })
     }
 })
@@ -75,12 +75,9 @@ app.post('/', (req, res) => {
     })
 })
 app.post('/signUpPro', (req, res) => {
-    // insert into members (id,pw,name,phone,birth) values ("rudghks09",rudghks110,kim,phone,birth);
-    // const addId =
-    //     'insert into members (id,pw,name,phone,birth) values ("' + req.body.hiddenId + '", "' + req.body.password + '", "' + req.body.name + '", "' + req.body.phoneNum + '", "' + req.body.birth + '");'
     let dbdb = {}
     dbdb[process.env.dbID] = req.body.hiddenId;
-    dbdb[process.env.dbPW] = req.body.password;
+    dbdb[process.env.dbPW] = bcrypt.hashSync(req.body.password, 10);
     dbdb[process.env.dbNAME] = req.body.name;
     dbdb[process.env.dbPHONE] = req.body.phoneNum;
     dbdb[process.env.dbPHONE] = req.body.birth;
@@ -89,9 +86,10 @@ app.post('/signUpPro', (req, res) => {
     connection.query(process.env.db_signupquery, dbdb, (err, result) => {
         if (err) console.log(asdf);
         else {
+            const same = bcrypt.compareSync(req.body.password, bcrypt.hashSync(req.body.password, 10));
+            console.log(same); // same = true
             console.log('가입성공');
             res.redirect('/login');
-
         }
         
     })
@@ -115,9 +113,10 @@ app.post('/login', (req, res) => {
     console.log(req.body.id);
     console.log(req.body.pw);
     //                  select id,pw from members where id = "a or 1=1 --" and pw = "req.body.password'
-    const logincheck = process.env.db_loginquery + req.body.id + process.env.db_loginquery2 + req.body.pw + '";'
+    // const logincheck = process.env.db_loginquery + req.body.id + process.env.db_loginquery2 + req.body.pw + '";'
+    const logincheck = process.env.db_loginquery + req.body.id + '";'
     connection.query(logincheck, (err, result) => {
-        if (err) console.log('error')
+        if (err) console.log(err)
         else {
             console.log('query suc')
             if (result[0] === undefined) {
@@ -126,7 +125,10 @@ app.post('/login', (req, res) => {
                 res.send('loginfail')
                 // res.redirect('/login');
             }
-            else {
+            else if (!bcrypt.compareSync(req.body.pw, result[0].pw)) {
+                res.send('loginfail')
+            }
+            else if(bcrypt.compareSync(req.body.pw, result[0].pw)){
                 console.log('login suc')
                 res.cookie('user', req.body.id, { // user 라는 이름 및 req.body.id 라는 값을 가진 쿠키 발급 중괄호 안은 속성 부여
                     httpOnly: true, // 자바 스크립트에서 document.cookie 시 확인되지 않음
@@ -137,3 +139,8 @@ app.post('/login', (req, res) => {
         }
     })
 })
+app.get('/logout', (req,res) => {
+    res.clearCookie('user').redirect('/')
+})
+
+
