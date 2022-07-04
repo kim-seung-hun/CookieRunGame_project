@@ -1,3 +1,33 @@
+let canvasMap = document.getElementById("map");
+let ctxMap = canvasMap.getContext("2d");
+
+canvasMap.width = 2000;
+canvasMap.height = 600;
+
+let backgroundImg = new Image();
+backgroundImg.src = "images/Map/first.png";
+
+//배경 객체선언 및 할당
+let background = {
+  x: 0,
+  y: 0,
+  width: 2000,
+  height: 600,
+  time: 0,
+  a: 1,
+  draw() {
+    this.time++;
+    this.x -= 0.05;
+    if (this.time % 1000 == 0) {
+      this.a -= 0.01;
+    }
+    ctxMap.globalAlpha = this.a;
+    // ctxMap.fillStyle = "black";
+    // ctxMap.fillRect(this.x, this.y, this.width, this.height);
+    ctxMap.drawImage(backgroundImg, this.x, this.y, this.width, this.height);
+  },
+};
+
 //캔버스 변수 선언, 할당
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
@@ -111,9 +141,21 @@ class Jelly {
     this.y = y;
     this.width = width;
     this.height = height;
+    this.eat = false;
+    this.speed = 3;
+    this.time = 0;
+  }
+  setEater() {
+    this.eat = true;
+  }
+  getEater() {
+    return this.eat;
   }
   draw() {
-    this.x--;
+    this.time++;
+    if (this.time % this.speed === 0) {
+      this.x--;
+    }
     ctx.fillStyle = "yellow";
     ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.globalAlpha = 1;
@@ -122,7 +164,16 @@ class Jelly {
 }
 
 let testJelly1 = new Jelly({ x: 750, y: 250, width: 100, height: 100 });
-let testJelly2 = new Jelly({ x: 1050, y: 450, width: 100, height: 100 });
+let testJelly2 = new Jelly({ x: 1050, y: 350, width: 100, height: 100 });
+
+class Floor {
+  constructor({ x, y, width, height }) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+}
 
 //점수선언
 let point = 0;
@@ -145,7 +196,6 @@ let timer = 0;
 let jumpTimer = 0;
 let jump = false;
 let animation;
-let jellyEaten = false;
 
 //게임실행
 function game() {
@@ -155,6 +205,7 @@ function game() {
   //전체 영역 클리어
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctxMap.clearRect(0, 0, canvasMap.width, canvasMap.width);
+
   //장애물 올라타기
   // hurdle.forEach((Hurdle) => {
   //   if (
@@ -189,11 +240,16 @@ function game() {
 
   //맵그리기, 캐릭터 그리기, 점수 그리기, 젤리 그리기
   background.draw();
-  firstMap.draw();
-  testJelly1.draw();
-  testJelly2.draw();
-  jellyEat(player, testJelly1);
-  jellyEat(player, testJelly2);
+  // testJelly1.draw();
+  // testJelly2.draw();
+  if (testJelly1.getEater() == false) {
+    jellyEat(player, testJelly1);
+  }
+  if (testJelly2.getEater() == false) {
+    jellyEat(player, testJelly2);
+  }
+  // jellyEat(player, testJelly1);
+  // jellyEat(player, testJelly2);
   player.update();
 
   // jelly.forEach((Jelly, i, jellyArray) => {
@@ -210,29 +266,17 @@ function game() {
 game();
 
 //젤리먹기 충돌체크
-function jellyEat(player, jelly) {
-  let eatJellyX = jelly.x - (player.x + player.width);
-  let eatJellyY = player.y - (jelly.y + jelly.width);
-  console.log(eatJellyX);
-  console.log(eatJellyY);
-  if (
-    eatJellyX < 30 &&
-    eatJellyX > -30 &&
-    eatJellyY < 30 &&
-    eatJellyY > -30 &&
-    jellyEaten == false
-  ) {
-    jellyEaten = true;
-    ctx.clearRect(jelly.x, jelly.y, jelly.width, jelly.height);
-    firstMap.draw();
-    if (jellyEaten == true) {
-      point += 10000;
-      eatJellyX = 0;
-    }
+function jellyEat(player, _jelly) {
+  let eatJellyX = _jelly.x - player.x;
+  let eatJellyY = _jelly.y - player.y;
+  if (eatJellyX < 70 && eatJellyX > -70 && eatJellyY < 80 && eatJellyY > -80) {
+    _jelly.setEater();
+    ctx.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
+    // firstMap.draw();
+    point += 10000;
+  } else if (_jelly.getEater() == false) {
+    _jelly.draw();
   }
-  // else if() {
-  //   jellyEaten = false;
-  // }
 }
 
 //키 코드 확인
