@@ -22,7 +22,6 @@
   border: solid 1px #dadada;
   position: relative;
   border-radius: 5px;
-  position: relative;
 }
 
 .id {
@@ -86,7 +85,7 @@
   border: none;
   outline: none;
   position: relative;
-  text-align: end;
+  text-align: start;
   font-size: 13px;
   font-weight: 600;
   width: 50%;
