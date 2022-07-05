@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="login.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap"
       rel="stylesheet"
@@ -35,7 +37,7 @@
           <input
             class="user_id"
             type="text"
-            maxlength="20"
+            maxlength="25"
             placeholder="Email ID"
           />
         </div>
@@ -54,6 +56,14 @@
             placeholder="Password"
           />
         </div>
+        <div id="joinFind">
+          <a
+            href="http://127.0.0.1:5500/login/joinPage/joinMember.html"
+            onclick="window.open(this.href,'회원가입','width=800px , height=650px , toolbar-no , scrollbars=yes'); return false;"
+            ><span>Sign up</span></a
+          >
+          <a href=""><span>Forgot Password?</span></a>
+        </div>
         <!-- loogin content3 -->
         <div class="log_btn1">
           <div class="log_btn-outline">
@@ -64,14 +74,6 @@
           </div> -->
         </div>
         <!-- loogin content4 -->
-        <div id="joinFind">
-          <a
-            href="http://127.0.0.1:5500/login/joinPage/joinMember.html"
-            onclick="window.open(this.href,'회원가입','width=800px , height=650px , toolbar-no , scrollbars=yes'); return false;"
-            ><span>회원가입</span></a
-          >
-          <a href=""><span>ID/PW 찾기</span></a>
-        </div>
       </div>
       <!-- ranking 화면 구성할 div 생성 -->
       <div id="logBodyRight"></div>

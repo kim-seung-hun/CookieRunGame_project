@@ -6,10 +6,15 @@ const COLORS = [
   // { r: 255, g: 104, b: 248 }, //pupple
   // { r: 44, g: 209, b: 252 }, //skyblue
   // { r: 54, g: 233, b: 84 }, //green
-  { r: 87, g: 3, b: 170 },
-  { r: 128, g: 0, b: 128 },
-  { r: 2, g: 2, b: 51 },
-  { r: 27, g: 27, b: 27 },
+  // { r: 87, g: 3, b: 170 },
+  // { r: 128, g: 0, b: 128 },
+  // { r: 2, g: 2, b: 51 },
+  // { r: 27, g: 27, b: 27 },
+  { r: 0, g: 128, b: 0 }, //green
+  { r: 135, g: 206, b: 235 }, //sktblue
+  { r: 250, g: 255, b: 89 }, //yellow
+  { r: 255, g: 192, b: 203 }, //pink
+  { r: 165, g: 42, b: 42 }, //brown
 ];
 
 class App {
@@ -22,8 +27,8 @@ class App {
 
     this.totalParticles = 15;
     this.particles = [];
-    this.maxRadius = 1000;
-    this.minRadius = 400;
+    this.maxRadius = 1100;
+    this.minRadius = 700;
 
     window.addEventListener("resize", this.resize.bind(this), false);
     this.resize();
