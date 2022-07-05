@@ -15,33 +15,53 @@
   </head>
   <body id="bg">
     <!-- 게임 제목 -->
-    <div id="header">달려라 인생아</div>
+    <div id="header"></div>
     <!-- loogin 및 ranking Main div 생성 -->
     <div id="logBody">
       <!-- loogin position 구성할 div 생성-->
       <div id="logBodyLeft">
+        <div class="log_icon">
+          <img
+            class="img_log"
+            src="/image/premium-icon-user-552848.png"
+            alt=""
+          />
+        </div>
         <!-- loogin content1 -->
         <div class="login">
-          <h3 class="log_id">
-            <label for="id">아이디</label>
-          </h3>
-          <input class="user_id" type="text" maxlength="20" />
+          <div class="img_center">
+            <img class="img_id" src="/image/pngwing.com.png" alt="" />
+          </div>
+          <input
+            class="user_id"
+            type="text"
+            maxlength="20"
+            placeholder="Email ID"
+          />
         </div>
         <!-- loogin content2 -->
         <div class="login">
-          <h3 class="log_pw">
+          <!-- <h3 class="log_pw">
             <label for="id">비밀번호</label>
-          </h3>
-          <input class="user_pw" type="password" maxlength="20" />
+          </h3> -->
+          <div class="img_center">
+            <img class="img_id" src="/image/pngwing1.com.png" alt="" />
+          </div>
+          <input
+            class="user_pw"
+            type="password"
+            maxlength="20"
+            placeholder="Password"
+          />
         </div>
         <!-- loogin content3 -->
         <div class="log_btn1">
           <div class="log_btn-outline">
-            <button class="log_btn2">로그인</button>
+            <button class="log_btn2">LOGIN</button>
           </div>
-          <div class="log_btn-outline">
+          <!-- <div class="log_btn-outline">
             <button class="logout_btn">로그아웃</button>
-          </div>
+          </div> -->
         </div>
         <!-- loogin content4 -->
         <div id="joinFind">
@@ -58,4 +78,5 @@
     </div>
   </body>
   <script src="login.js"></script>
+  <script type="module" src="app.js"></script>
 </html>

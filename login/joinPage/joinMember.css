@@ -4,6 +4,10 @@
   margin: 0;
 }
 
+h1 {
+  font-family: "Noto Serif KR", serif;
+}
+
 #join_title {
   letter-spacing: 15px;
   padding-top: 30px;
