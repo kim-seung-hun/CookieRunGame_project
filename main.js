@@ -37,7 +37,7 @@ canvas.width = 2000;
 canvas.height = 600;
 
 //중력설정
-const gravity = 0.009;
+const gravity = 0.01;
 
 //플레이어 이미지 프레임변경
 //달리기 이미지
@@ -76,14 +76,27 @@ for (let i = 0; i < 4; i++) {
   jumpPlayer.push(new Image());
   jumpPlayer[i].src = imglinkJump[i];
 }
+//더블점프 이미지
+let dbjumpPlayer = new Array();
+let imglinkDbjump = [
+  "images/Character/Taehoon/Jump/Jump1.png",
+  "images/Character/Taehoon/Jump/Jump2.png",
+  "images/Character/Taehoon/Jump/Jump1.png",
+  "images/Character/Taehoon/Jump/Jump2.png",
+];
+for (let i = 0; i < 4; i++) {
+  dbjumpPlayer.push(new Image());
+  dbjumpPlayer[i].src = imglinkDbjump[i];
+}
+//피격시 이미지
 
 //플레이어 설정
 let player = {
   x: 120,
-  y: 423,
+  y: 350,
   width: 80,
   height: 90,
-  yspeed: 0.1,
+  yspeed: 1,
   index: 0,
   speed: 15,
   time: 0,
@@ -124,11 +137,36 @@ let player = {
     this.yspeed += gravity;
 
     //바닥에 캐릭터 닿으면 멈추기
-    if (this.y + this.height + this.yspeed <= canvas.height - 87) {
+    if (this.y + this.height <= canvas.height) {
       this.yspeed += gravity;
     } else this.yspeed = 0;
   },
 };
+
+let floorImg = new Image();
+floorImg.src = "images/Hurdle/floor.png";
+
+//땅 설정
+class Floor {
+  constructor({ x, y, width, height }) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+  draw() {
+    // ctx.fillStyle = "black";
+    // ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(floorImg, this.x, this.y, this.width, this.height);
+  }
+}
+
+let floor = [
+  new Floor({ x: 0, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 80, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 160, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 240, y: 510, width: 80, height: 90 }),
+];
 
 //젤리 기본 이미지
 let imgJelly = new Image();
@@ -142,7 +180,7 @@ class Jelly {
     this.width = width;
     this.height = height;
     this.eat = false;
-    this.speed = 3;
+    this.speed = 2;
     this.time = 0;
   }
   setEater() {
@@ -153,7 +191,7 @@ class Jelly {
   }
   draw() {
     this.time++;
-    if (this.time % this.speed === 0) {
+    if (this.time % this.speed === 1) {
       this.x--;
     }
     ctx.fillStyle = "yellow";
@@ -163,17 +201,8 @@ class Jelly {
   }
 }
 
-let testJelly1 = new Jelly({ x: 750, y: 250, width: 100, height: 100 });
+let testJelly1 = new Jelly({ x: 750, y: 300, width: 100, height: 100 });
 let testJelly2 = new Jelly({ x: 1050, y: 350, width: 100, height: 100 });
-
-class Floor {
-  constructor({ x, y, width, height }) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-  }
-}
 
 //점수선언
 let point = 0;
@@ -186,7 +215,7 @@ let drawScore = {
   height: 50,
   draw() {
     ctx.font = "20px Arial";
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "Black";
     ctx.fillText("점수: " + point, 30, 30);
   },
 };
@@ -206,51 +235,52 @@ function game() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctxMap.clearRect(0, 0, canvasMap.width, canvasMap.width);
 
-  //장애물 올라타기
-  // hurdle.forEach((Hurdle) => {
-  //   if (
-  //     player.y + player.height <= Hurdle.y &&
-  //     player.y + player.height + player.yspeed >= Hurdle.y &&
-  //     player.x + player.width >= Hurdle.x &&
-  //     player.x <= Hurdle.x + Hurdle.width
-  //   ) {
-  //     player.yspeed = 0;
-  //   }
-  // });
+  //땅, 장애물 올라타기
+
+  for (let i = 0; i < floor.length; i++) {
+    if (
+      player.y + player.height <= floor[i].y &&
+      player.y + player.height + player.yspeed >= floor[i].y &&
+      player.x + player.width >= floor[i].x &&
+      player.x <= floor[i].x + floor[i].width
+    ) {
+      player.yspeed = 0;
+    }
+  }
 
   //점프기능
   //점프시 점프값 증가 & 이미지 변경
   if (jump == true) {
-    player.y -= 3.5;
+    player.y -= 2;
     jumpTimer++;
   }
 
-  //점프시간이 50 넘어가면 점프 끝
-  if (jumpTimer > 35) {
+  //점프시간이 100 넘어가면 점프 끝
+  if (jumpTimer > 100) {
+    player.y -= 0;
+  }
+
+  if (jumpTimer > 198) {
     jump = false;
     jumpTimer = 0;
   }
+
   //점프 끝난 후 다시 원래 이미지로
-  if (
-    player.y + player.height + player.yspeed + 0.01 >= canvas.height - 87 &&
-    player.state == "jump"
-  ) {
+  if (player.y + player.height >= floor[2].y - 1 && player.state == "jump") {
     player.state = "run";
+    console.log("실행");
   }
+  console.log(player.y);
 
   //맵그리기, 캐릭터 그리기, 점수 그리기, 젤리 그리기
   background.draw();
-  // testJelly1.draw();
-  // testJelly2.draw();
+
   if (testJelly1.getEater() == false) {
     jellyEat(player, testJelly1);
   }
   if (testJelly2.getEater() == false) {
     jellyEat(player, testJelly2);
   }
-  // jellyEat(player, testJelly1);
-  // jellyEat(player, testJelly2);
-  player.update();
 
   // jelly.forEach((Jelly, i, jellyArray) => {
   //   if (Jelly.x < 0) {
@@ -259,7 +289,11 @@ function game() {
   //   Jelly.x -= 0.3;
   //   Jelly.draw();
   // });
+  floor.forEach((floor) => {
+    floor.draw();
+  });
   drawScore.draw();
+  player.update();
 }
 
 //실행
@@ -269,7 +303,7 @@ game();
 function jellyEat(player, _jelly) {
   let eatJellyX = _jelly.x - player.x;
   let eatJellyY = _jelly.y - player.y;
-  if (eatJellyX < 70 && eatJellyX > -70 && eatJellyY < 80 && eatJellyY > -80) {
+  if (eatJellyX < 60 && eatJellyX > -60 && eatJellyY < 60 && eatJellyY > -60) {
     _jelly.setEater();
     ctx.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
     // firstMap.draw();
@@ -295,7 +329,9 @@ document.addEventListener("keydown", function (key) {
         isSliding = false;
         player.state = "jump";
         player.height = 90;
+        player.width = 80;
       }
+      console.log(player.state);
       break;
 
     case "KeyA":
@@ -307,33 +343,44 @@ document.addEventListener("keydown", function (key) {
       break;
 
     case "ArrowDown":
-      player.state = "slide";
-      player.height = 55;
+      if (player.state == "jump" || jump == "true") {
+        return;
+      } else {
+        player.state = "slide";
+        player.height = 55;
+        player.width = 95;
+        console.log(player.state);
 
-      if (!isSliding) {
-        player.y = player.y + 45;
-        isSliding = true;
+        if (!isSliding) {
+          player.y = player.y + 35;
+          isSliding = true;
+        }
+        break;
       }
-      break;
   }
 });
 
 document.addEventListener("keyup", function (key) {
   switch (key.code) {
     case "ArrowDown":
-      player.state = "run";
-      if (isSliding && jump == true) {
-        isSliding = false;
-        player.height = 90;
-      } else if (isSliding && player.state == "run") {
-        player.y = player.y - 45;
-        isSliding = false;
-        player.height = 90;
-      } else if (!isSliding && player.state == "run") {
-        isSliding = false;
-        player.height = 90;
-      }
+      if (player.state == "slide") {
+        player.state = "run";
+        if (isSliding && jump == true) {
+          isSliding = false;
+          player.height = 90;
+          player.width = 80;
+        } else if (isSliding && player.state == "run") {
+          player.y = player.y - 35;
+          isSliding = false;
+          player.height = 90;
+          player.width = 80;
+        } else if (!isSliding && player.state == "run") {
+          isSliding = false;
+          player.height = 90;
+          player.width = 80;
+        }
 
-      break;
+        break;
+      }
   }
 });
