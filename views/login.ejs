@@ -22,14 +22,14 @@
 
             
             $.ajax({
-                url: "/login", // /abc라면 메인 홈페이지 / 에서 보낸 값은 /abc 경로에 담기는 개념
+                url: "/kg/login", // /abc라면 메인 홈페이지 / 에서 보낸 값은 /abc 경로에 담기는 개념
                 type: "POST",
                 data: {
                     id: idcheck,
                     pw: pwcheck
                 },
                 success: function (data) {
-                    console.log(data);
+                    console.log(data); // <= server.js 에서 발급한 토큰 출력
                     if (data == 'loginfail') {
                         alert('아이디 혹은 비밀번호를 확인하십시오.')
                         window.location='/login'
