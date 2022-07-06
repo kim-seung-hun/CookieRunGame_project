@@ -321,18 +321,22 @@ function jellyEat(player, _jelly) {
 let isSliding = false;
 
 document.addEventListener("keydown", function (key) {
-  switch (key.code) {
-    case "Space":
-      player.state = "jump";
-      jump = true;
-      if (isSliding) {
-        isSliding = false;
+  if (player.state == "run") {
+    switch (key.code) {
+      case "Space":
         player.state = "jump";
-        player.height = 90;
-        player.width = 80;
-      }
-      console.log(player.state);
-      break;
+        jump = true;
+        if (isSliding) {
+          isSliding = false;
+          player.state = "jump";
+          player.height = 90;
+          player.width = 80;
+        }
+        console.log(player.state);
+        break;      
+    }
+  }
+  switch (key.code) {
 
     case "KeyA":
       player.x -= 10;
