@@ -18,7 +18,7 @@ export class Visual {
   }
 
   show(stageWidth, stageHeight) {
-    this.pos = this.text.setText("LIFE is run", 10, stageWidth, stageHeight);
+    this.pos = this.text.setText("LIFE IS RUN", 10, stageWidth, stageHeight);
     this.posTotal = this.pos.length - 1;
   }
 
