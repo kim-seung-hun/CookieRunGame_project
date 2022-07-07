@@ -135,7 +135,7 @@ let player = {
       }
     }
     //히트박스 설정
-    ctx.fillStyle = grb;
+    ctx.fillStyle = "green";
     ctx.fillRect(this.x, this.y, this.width, this.height);
     //포인트박스 설정
     ctx.fillStyle = "yellow";
