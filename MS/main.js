@@ -148,7 +148,11 @@ let player = {
         ? slidePlayer[this.index]
         : this.state == "jump"
         ? jumpPlayer[this.index]
+        : this.state == "dbjumpstart"
+        ? dbjumpPlayer[this.index]
         : this.state == "dbjump"
+        ? dbjumpPlayer[this.index]
+        : this.state == "dbjumplast"
         ? dbjumpPlayer[this.index]
         : null,
       this.x,
@@ -168,6 +172,36 @@ let player = {
     } else this.yspeed = 0;
   },
 };
+
+function jumpSkill() {
+  //점프기능
+  //점프시 점프값 증가 & 이미지 변경
+  if (jump == true) {
+    player.y -= 2;
+    jumpTimer++;
+  }
+
+  //점프시간이 100 넘어가면 점프 끝
+  if (jumpTimer > 100) {
+    player.y -= 0;
+  }
+
+  if (jumpTimer > 198) {
+    jump = false;
+    jumpTimer = 0;
+  }
+
+  if (player.state == "dbjump")
+    if (
+      player.y + player.height >= floor[2].y - 1 &&
+      (player.state == "jump" ||
+        player.state == "dbjump" ||
+        player.state == "dbjumplast")
+    ) {
+      //점프 끝난 후 다시 원래 이미지로
+      player.state = "run";
+    }
+}
 
 let floorImg = new Image();
 floorImg.src = "images/Hurdle/floor.png";
@@ -288,29 +322,7 @@ function game() {
     }
   }
 
-  //점프기능
-  //점프시 점프값 증가 & 이미지 변경
-  if (jump == true) {
-    player.y -= 2;
-    jumpTimer++;
-  }
-
-  //점프시간이 100 넘어가면 점프 끝
-  if (jumpTimer > 100) {
-    player.y -= 0;
-  }
-
-  if (jumpTimer > 198) {
-    jump = false;
-    jumpTimer = 0;
-  }
-
-  //점프 끝난 후 다시 원래 이미지로
-  if (player.y + player.height >= floor[2].y - 1 && player.state == "jump") {
-    player.state = "run";
-    console.log("실행");
-  }
-  console.log(player.y);
+  jumpSkill();
 
   //맵그리기, 캐릭터 그리기, 점수 그리기, 젤리 그리기
   background.draw();
@@ -374,17 +386,19 @@ document.addEventListener("keydown", function (key) {
         player.state = "jump";
         jump = true;
 
-        break;
-    }
-  }
-  if (player.state == "jump" && jump == true) {
-    switch (key.code) {
-      case "Space":
-        player.state = "dbjump";
+        if (player.state == "jump" && jump == true && jumpTimer > 50) {
+          switch (key.code) {
+            case "Space":
+              player.state = "dbjump";
+
+              break;
+          }
+        }
 
         break;
     }
   }
+
   switch (key.code) {
     case "KeyA":
       player.x -= 10;

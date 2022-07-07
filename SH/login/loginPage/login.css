@@ -285,6 +285,12 @@ h3 {
   color: white;
 }
 
-.flex {
-  display: flex;
+.margin_right_25px {
+  margin-right: 25px;
 }
+
+.margin_right_30px {
+  margin-right: px;
+}
+
+/* z */
