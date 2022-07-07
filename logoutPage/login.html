@@ -24,58 +24,31 @@
     <div id="logBody">
       <!-- loogin position 구성할 div 생성-->
       <div id="logBodyLeft">
-        <div class="log_icon">
-          <img
-            class="img_log"
-            src="/image/premium-icon-user-552848.png"
-            alt=""
-          />
-        </div
-        <!-- loogin content1 -->
-        <div class="login">
-          <div class="img_center">
-            <img class="img_id" src="/image/pngwing.com.png" alt="" />
-          </div>
-          <input
-            class="user_id"
-            type="text"
-            maxlength="25"
-            placeholder="Email ID"
-          />
+        <div class="cong">
+          <%=isId%>님 환영합니다
+            <input type="hidden" id="registDate" value="<%=time%>" />
         </div>
-        <!-- loogin content2 -->
-        <div class="login">
-          <!-- <h3 class="log_pw">
-            <label for="id">비밀번호</label>
-          </h3> -->
-          <div class="img_center">
-            <img class="img_id" src="/image/pngwing1.com.png" alt="" />
-          </div>
-          <input
-            class="user_pw"
-            type="password"
-            maxlength="20"
-            placeholder="Password"
-          />
+        <div class="cong">
+            <label for="id" id="livetime"></label>
         </div>
         <div id="joinFind">
           <a
-            href="http://127.0.0.1:5500/login/joinPage/joinMember.html"
-            onclick="window.open(this.href,'회원가입','width=800px , height=650px , toolbar-no , scrollbars=yes'); return false;"
-            ><span>Sign up</span></a
+            href=""
+            onclick="window.open(this.href,'my information','width=800px , height=650px , toolbar-no , scrollbars=yes'); return false;"
+            ><span>my information</span></a
           >
-          <a href=""><span>Forgot Password?</span></a>
         </div>
         <!-- loogin content3 -->
         <div class="log_btn1">
           <div class="log_btn-outline">
-            <button class="log_btn2">LOGIN</button>
+            <button class="log_btn2">GAME START</button>
           </div>
-          <!-- <div class="log_btn-outline">
-            <button class="logout_btn">로그아웃</button>
-          </div> -->
         </div>
-        <!-- loogin content4 -->
+        <div class="log_btn1">
+          <div class="log_btn-outline">
+            <button class="log_btn2 height">LOGOUT</button>
+          </div>
+        </div>
       </div>
       <!-- ranking 화면 구성할 div 생성 -->
       <div id="logBodyRight">
