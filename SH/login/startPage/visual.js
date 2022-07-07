@@ -1,6 +1,6 @@
-import { Text } from "./text.js.js";
+import { Text } from "./text.js";
 import { Particle } from "./particle.js";
-import { hslToHex } from "./utils.js.js";
+import { hslToHex } from "./utils.js";
 
 export class Visual {
   constructor() {
@@ -11,7 +11,7 @@ export class Visual {
     this.mouse = {
       x: 0,
       y: 0,
-      radius: 30,
+      radius: 40,
     };
 
     document.addEventListener("pointermove", this.onMove.bind(this), false);
