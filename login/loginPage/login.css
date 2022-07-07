@@ -254,7 +254,7 @@ input:focus::placeholder {
 h3 {
   margin-top: 40px;
   margin-left: 25px;
-  margin-right: 30px;
+  margin-right: 40px;
 }
 
 .right_bottom {
@@ -285,10 +285,14 @@ h3 {
   color: white;
 }
 
-.margin_right_25px {
-  margin-right: 25px;
+.margin_right_5px {
+  margin-right: 5px;
 }
 
-.margin_right_30px {
-  margin-right: px;
+.margin_right_50px {
+  margin-right: 50px;
+}
+
+.margin_top_10px {
+  margin-top: 10px;
 }
