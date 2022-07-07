@@ -77,17 +77,41 @@ for (let i = 0; i < 4; i++) {
   jumpPlayer[i].src = imglinkJump[i];
 }
 //더블점프 이미지
+//더블점프 스타트
+let dbjumpstartPlayer = new Array();
+let imglinkDbjumpstart = [
+  "images/Character/Taehoon/Jump/DbjumpStart.png",
+  "images/Character/Taehoon/Jump/DbjumpStart.png",
+  "images/Character/Taehoon/Jump/DbjumpStart.png",
+  "images/Character/Taehoon/Jump/DbjumpStart.png",
+];
+for (let i = 0; i < 4; i++) {
+  dbjumpstartPlayer.push(new Image());
+  dbjumpstartPlayer[i].src = imglinkDbjumpstart[i];
+}
 let dbjumpPlayer = new Array();
 let imglinkDbjump = [
-  "images/Character/Taehoon/Jump/Jump1.png",
-  "images/Character/Taehoon/Jump/Jump2.png",
-  "images/Character/Taehoon/Jump/Jump1.png",
-  "images/Character/Taehoon/Jump/Jump2.png",
+  "images/Character/Taehoon/Jump/Dbjump1.png",
+  "images/Character/Taehoon/Jump/Dbjump2.png",
+  "images/Character/Taehoon/Jump/Dbjump3.png",
+  "images/Character/Taehoon/Jump/Dbjump4.png",
 ];
 for (let i = 0; i < 4; i++) {
   dbjumpPlayer.push(new Image());
   dbjumpPlayer[i].src = imglinkDbjump[i];
 }
+let dbjumplastPlayer = new Array();
+let imglinkDbjumplast = [
+  "images/Character/Taehoon/Jump/Dbjumplast.png",
+  "images/Character/Taehoon/Jump/Dbjumplast.png",
+  "images/Character/Taehoon/Jump/Dbjumplast.png",
+  "images/Character/Taehoon/Jump/Dbjumplast.png",
+];
+for (let i = 0; i < 4; i++) {
+  dbjumplastPlayer.push(new Image());
+  dbjumplastPlayer[i].src = imglinkDbjumplast[i];
+}
+
 //피격시 이미지
 
 //플레이어 설정
@@ -124,6 +148,8 @@ let player = {
         ? slidePlayer[this.index]
         : this.state == "jump"
         ? jumpPlayer[this.index]
+        : this.state == "dbjump"
+        ? dbjumpPlayer[this.index]
         : null,
       this.x,
       this.y,
@@ -153,8 +179,13 @@ class Floor {
     this.y = y;
     this.width = width;
     this.height = height;
+    this.time = 0;
   }
   draw() {
+    this.time++;
+    if (this.time % 1 == 0) {
+      this.x--;
+    }
     // ctx.fillStyle = "black";
     // ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(floorImg, this.x, this.y, this.width, this.height);
@@ -166,6 +197,15 @@ let floor = [
   new Floor({ x: 80, y: 510, width: 80, height: 90 }),
   new Floor({ x: 160, y: 510, width: 80, height: 90 }),
   new Floor({ x: 240, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 320, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 400, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 480, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 720, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 800, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 880, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 960, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 1040, y: 510, width: 80, height: 90 }),
+  new Floor({ x: 1120, y: 510, width: 80, height: 90 }),
 ];
 
 //젤리 기본 이미지
@@ -333,6 +373,14 @@ document.addEventListener("keydown", function (key) {
         }
         player.state = "jump";
         jump = true;
+
+        break;
+    }
+  }
+  if (player.state == "jump" && jump == true) {
+    switch (key.code) {
+      case "Space":
+        player.state = "dbjump";
 
         break;
     }

@@ -1,0 +1,34 @@
+{
+  "jelly": {
+    "jelly1": {
+      "x": 0,
+      "y": 510,
+      "width": 80,
+      "height": 90
+    },
+    "jelly2": {
+      "x": 80,
+      "y": 510,
+      "width": 80,
+      "height": 90
+    },
+    "jelly3": {
+      "x": 160,
+      "y": 510,
+      "width": 80,
+      "height": 90
+    },
+    "jelly4": {
+      "x": 240,
+      "y": 510,
+      "width": 80,
+      "height": 90
+    },
+    "jelly5": {
+      "x": 320,
+      "y": 510,
+      "width": 80,
+      "height": 90
+    }
+  }
+}
