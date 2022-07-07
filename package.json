@@ -1,6 +1,7 @@
 {
   "name": "login",
   "version": "1.0.0",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,18 +27,9 @@
     "mysql": "^2.18.1",
     "nodemailer": "^6.7.6",
     "nunjucks": "^3.2.3",
+    "package.json": "^2.0.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/EH-llOrJ/TeamProject.git"
-  },
-  "keywords": [],
-  "bugs": {
-    "url": "https://github.com/EH-llOrJ/TeamProject/issues"
-  },
-  "homepage": "https://github.com/EH-llOrJ/TeamProject#readme",
-  "description": ""
+  }
 }

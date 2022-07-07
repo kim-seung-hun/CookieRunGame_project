@@ -2,7 +2,7 @@ import { Visual } from "./visual.js";
 
 class App {
   constructor() {
-    this.scanva = document.createElement("canvas");
+    this.canvas = document.createElement("canvas");
     document.body.appendChild(this.canvas);
     this.ctx = this.canvas.getContext("2d");
 
