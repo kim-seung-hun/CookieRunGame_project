@@ -117,7 +117,7 @@ for (let i = 0; i < 4; i++) {
 //플레이어 설정
 let player = {
   x: 120,
-  y: 350,
+  y: 410,
   width: 80,
   height: 90,
   yspeed: 1,
@@ -149,11 +149,11 @@ let player = {
         : this.state == "jump"
         ? jumpPlayer[this.index]
         : this.state == "dbjumpstart"
-        ? dbjumpPlayer[this.index]
+        ? dbjumpstartPlayer[this.index]
         : this.state == "dbjump"
         ? dbjumpPlayer[this.index]
         : this.state == "dbjumplast"
-        ? dbjumpPlayer[this.index]
+        ? dbjumplastPlayer[this.index]
         : null,
       this.x,
       this.y,
@@ -173,78 +173,39 @@ let player = {
   },
 };
 
+//점프기능
 function jumpSkill() {
-  //점프기능
   //점프시 점프값 증가 & 이미지 변경
   if (jump == true) {
     player.y -= 2;
     jumpTimer++;
   }
 
-  //점프시간이 100 넘어가면 점프 끝
-  if (jumpTimer > 100) {
+  //점프시간이 100 넘어가면 상승 끝
+  if (jumpTimer > 100 && player.state == "jump") {
     player.y -= 0;
   }
+  // //점프타이머가 199이상이면 점프해제
+  // if (jumpTimer > 199 && player.state == "jump") {
+  //   jump = false;
+  //   jumpTimer = 0;
+  // }
 
-  if (jumpTimer > 198) {
-    jump = false;
-    jumpTimer = 0;
+  //더블점프
+  if (dbjump == true) {
+    player.y -= 1.5;
+    jumpTimer++;
   }
 
-  if (player.state == "dbjump")
-    if (
-      player.y + player.height >= floor[2].y - 1 &&
-      (player.state == "jump" ||
-        player.state == "dbjump" ||
-        player.state == "dbjumplast")
-    ) {
-      //점프 끝난 후 다시 원래 이미지로
-      player.state = "run";
-    }
-}
-
-let floorImg = new Image();
-floorImg.src = "images/Hurdle/floor.png";
-
-//땅 설정
-class Floor {
-  constructor({ x, y, width, height }) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.time = 0;
-  }
-  draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x--;
-    }
-    // ctx.fillStyle = "black";
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
-    ctx.drawImage(floorImg, this.x, this.y, this.width, this.height);
+  //더블 점프 & 점프타이머 100 넘어가면 상승 끝
+  if (player.state == "dbjump" && jumpTimer > 100) {
+    player.y -= 0;
   }
 }
-
-let floor = [
-  new Floor({ x: 0, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 80, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 160, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 240, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 320, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 400, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 480, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 720, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 800, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 880, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 960, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 1040, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 1120, y: 510, width: 80, height: 90 }),
-];
 
 //젤리 기본 이미지
 let imgJelly = new Image();
-imgJelly.src = "images/Jelly/왕젤리1.png";
+imgJelly.src = "images/Hurdle/곰돌이.png";
 
 //젤리 클래스
 class Jelly {
@@ -294,10 +255,11 @@ let drawScore = {
   },
 };
 
-//전역변수
+//전역변수(timer=프레임, jumpTimer = 점프시간)
 let timer = 0;
 let jumpTimer = 0;
 let jump = false;
+let dbjump = false;
 let animation;
 
 //게임실행
@@ -319,6 +281,10 @@ function game() {
       player.x <= floor[i].x + floor[i].width
     ) {
       player.yspeed = 0;
+      jumpTimer = 0;
+      jump = false;
+      dbjump = false;
+      player.state = "run";
     }
   }
 
@@ -346,6 +312,7 @@ function game() {
   });
   drawScore.draw();
   player.update();
+  console.log(player.y);
 }
 
 //실행
@@ -383,18 +350,18 @@ document.addEventListener("keydown", function (key) {
           player.width = 80;
           player.state = "jump";
         }
+        player.y = player.y + 0.5;
         player.state = "jump";
         jump = true;
-
-        if (player.state == "jump" && jump == true && jumpTimer > 50) {
-          switch (key.code) {
-            case "Space":
-              player.state = "dbjump";
-
-              break;
-          }
-        }
-
+        break;
+    }
+  }
+  if (player.state == "jump" && jumpTimer > 1) {
+    switch (key.code) {
+      case "Space":
+        jumpTimer = 0;
+        player.state = "dbjump";
+        dbjump = true;
         break;
     }
   }
