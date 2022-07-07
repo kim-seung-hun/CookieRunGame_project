@@ -117,7 +117,7 @@ for (let i = 0; i < 4; i++) {
 //플레이어 설정
 let player = {
   x: 120,
-  y: 350,
+  y: 410,
   width: 80,
   height: 90,
   yspeed: 1,
@@ -179,89 +179,33 @@ function jumpSkill() {
   if (jump == true) {
     player.y -= 2;
     jumpTimer++;
-    console.log(jumpTimer);
   }
 
   //점프시간이 100 넘어가면 상승 끝
   if (jumpTimer > 100 && player.state == "jump") {
     player.y -= 0;
   }
-  //점프타이머가 199이상이면 점프해제
-  if (jumpTimer > 199 && player.state == "jump") {
-    jump = false;
-    jumpTimer = 0;
-  }
+  // //점프타이머가 199이상이면 점프해제
+  // if (jumpTimer > 199 && player.state == "jump") {
+  //   jump = false;
+  //   jumpTimer = 0;
+  // }
 
   //더블점프
   if (dbjump == true) {
-    player.y -= 2.15;
+    player.y -= 1.5;
     jumpTimer++;
   }
 
-  //더블 점프 & 점프타이머 50 넘어가면 상승 끝
+  //더블 점프 & 점프타이머 100 넘어가면 상승 끝
   if (player.state == "dbjump" && jumpTimer > 100) {
     player.y -= 0;
   }
-
-  if (player.state == "dbjump" && jumpTimer > 480) {
-    jump = false;
-    dbjump = false;
-    jumpTimer = 0;
-  }
-
-  //바닥에 닿았을 때 run상태로
-  if (
-    player.y + player.height >= floor[2].y - 1 &&
-    (player.state == "jump" ||
-      player.state == "dbjump" ||
-      player.state == "dbjumplast")
-  ) {
-    player.state = "run";
-  }
 }
-
-let floorImg = new Image();
-floorImg.src = "images/Hurdle/floor.png";
-
-//땅 설정
-class Floor {
-  constructor({ x, y, width, height }) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.time = 0;
-  }
-  draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x--;
-    }
-    // ctx.fillStyle = "black";
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
-    ctx.drawImage(floorImg, this.x, this.y, this.width, this.height);
-  }
-}
-
-let floor = [
-  new Floor({ x: 0, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 80, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 160, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 240, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 320, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 400, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 480, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 720, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 800, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 880, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 960, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 1040, y: 510, width: 80, height: 90 }),
-  new Floor({ x: 1120, y: 510, width: 80, height: 90 }),
-];
 
 //젤리 기본 이미지
 let imgJelly = new Image();
-imgJelly.src = "images/Jelly/왕젤리1.png";
+imgJelly.src = "images/Hurdle/곰돌이.png";
 
 //젤리 클래스
 class Jelly {
@@ -337,6 +281,10 @@ function game() {
       player.x <= floor[i].x + floor[i].width
     ) {
       player.yspeed = 0;
+      jumpTimer = 0;
+      jump = false;
+      dbjump = false;
+      player.state = "run";
     }
   }
 
@@ -364,11 +312,11 @@ function game() {
   });
   drawScore.draw();
   player.update();
+  console.log(player.y);
 }
 
 //실행
 game();
-console.log(jumpTimer);
 
 //젤리먹기 충돌체크
 function jellyEat(player, _jelly) {
@@ -402,6 +350,7 @@ document.addEventListener("keydown", function (key) {
           player.width = 80;
           player.state = "jump";
         }
+        player.y = player.y + 0.5;
         player.state = "jump";
         jump = true;
         break;
