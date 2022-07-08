@@ -9,6 +9,69 @@ canvasMain.height = 600;
 //중력설정
 const gravity = 0.01;
 
+//폰트적용
+let font = new FontFace("point", "images/Font/a공주를부탁해.ttf");
+font.load().then(function () {});
+
+//플레이어 설정
+let player = {
+  x: 120,
+  y: 410,
+  width: 80,
+  height: 90,
+  yspeed: 1,
+  index: 0,
+  speed: 15,
+  time: 0,
+  state: "run",
+  draw() {
+    this.time++;
+    if (this.time % this.speed === 0) {
+      if (this.index < 3) {
+        this.index++;
+      } else {
+        this.index = 0;
+      }
+    }
+    //히트박스 설정
+    ctxMain.fillStyle = "green";
+    ctxMain.fillRect(this.x, this.y, this.width, this.height);
+    //포인트박스 설정
+    ctxMain.fillStyle = "yellow";
+    ctxMain.fillRect(this.x + 17, this.y + 20, 50, 50);
+    //조건 ? 맞는거 : 틀린거
+    ctxMain.drawImage(
+      this.state == "run"
+        ? runPlayer[this.index]
+        : this.state == "slide"
+        ? slidePlayer[this.index]
+        : this.state == "jump"
+        ? jumpPlayer[this.index]
+        : this.state == "dbjumpstart"
+        ? dbjumpstartPlayer[this.index]
+        : this.state == "dbjump"
+        ? dbjumpPlayer[this.index]
+        : this.state == "dbjumplast"
+        ? dbjumplastPlayer[this.index]
+        : null,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+  },
+  update() {
+    this.draw();
+    this.y += this.yspeed;
+    this.yspeed += gravity;
+
+    //바닥에 캐릭터 닿으면 멈추기
+    if (this.y + this.height <= canvasMain.height) {
+      this.yspeed += gravity;
+    } else this.yspeed = 0;
+  },
+};
+
 //플레이어 이미지 프레임변경
 //달리기 이미지
 let runPlayer = new Array();
@@ -84,65 +147,6 @@ for (let i = 0; i < 4; i++) {
 
 //피격시 이미지
 
-//플레이어 설정
-let player = {
-  x: 120,
-  y: 410,
-  width: 80,
-  height: 90,
-  yspeed: 1,
-  index: 0,
-  speed: 15,
-  time: 0,
-  state: "run",
-  draw() {
-    this.time++;
-    if (this.time % this.speed === 0) {
-      if (this.index < 3) {
-        this.index++;
-      } else {
-        this.index = 0;
-      }
-    }
-    //히트박스 설정
-    ctxMain.fillStyle = "green";
-    ctxMain.fillRect(this.x, this.y, this.width, this.height);
-    //포인트박스 설정
-    ctxMain.fillStyle = "yellow";
-    ctxMain.fillRect(this.x + 17, this.y + 20, 50, 50);
-    //조건 ? 맞는거 : 틀린거
-    ctxMain.drawImage(
-      this.state == "run"
-        ? runPlayer[this.index]
-        : this.state == "slide"
-        ? slidePlayer[this.index]
-        : this.state == "jump"
-        ? jumpPlayer[this.index]
-        : this.state == "dbjumpstart"
-        ? dbjumpstartPlayer[this.index]
-        : this.state == "dbjump"
-        ? dbjumpPlayer[this.index]
-        : this.state == "dbjumplast"
-        ? dbjumplastPlayer[this.index]
-        : null,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    );
-  },
-  update() {
-    this.draw();
-    this.y += this.yspeed;
-    this.yspeed += gravity;
-
-    //바닥에 캐릭터 닿으면 멈추기
-    if (this.y + this.height <= canvasMain.height) {
-      this.yspeed += gravity;
-    } else this.yspeed = 0;
-  },
-};
-
 //점프기능
 function jumpSkill() {
   //점프시 점프값 증가 & 이미지 변경
@@ -156,7 +160,7 @@ function jumpSkill() {
   }
   //더블점프
   if (dbjump == true) {
-    player.y -= 1.5;
+    player.y -= 2.5;
     jumpTimer++;
   }
   if (player.state == "dbjumpstart" && jumpTimer > 50) {
@@ -171,44 +175,10 @@ function jumpSkill() {
   }
 }
 
-//젤리 기본 이미지
-let imgJelly = new Image();
-imgJelly.src = "images/Hurdle/곰돌이.png";
-
-//젤리 클래스
-class Jelly {
-  constructor({ x, y, width, height }) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.eat = false;
-    this.speed = 2;
-    this.time = 0;
-  }
-  setEater() {
-    this.eat = true;
-  }
-  getEater() {
-    return this.eat;
-  }
-  draw() {
-    this.time++;
-    if (this.time % this.speed === 1) {
-      this.x--;
-    }
-    ctxMain.fillStyle = "yellow";
-    ctxMain.fillRect(this.x, this.y, this.width, this.height);
-    ctxMain.globalAlpha = 1;
-    ctxMain.drawImage(imgJelly, this.x, this.y, this.width, this.height);
-  }
-}
-
-let testJelly1 = new Jelly({ x: 750, y: 300, width: 100, height: 100 });
-let testJelly2 = new Jelly({ x: 1050, y: 350, width: 100, height: 100 });
-
 //점수선언
 let point = 0;
+let pointImg = new Image();
+pointImg.src = "images/Map/point.png";
 
 //점수표
 let drawScore = {
@@ -217,9 +187,10 @@ let drawScore = {
   width: 50,
   height: 50,
   draw() {
-    ctxMain.font = "20px Arial";
+    ctxMain.font = "bold 20px point";
     ctxMain.fillStyle = "Black";
-    ctxMain.fillText("점수: " + point, 30, 30);
+    ctxMain.drawImage(pointImg, 450, 77, 30, 30);
+    ctxMain.fillText(point, 500, 100, 200);
   },
 };
 
@@ -228,60 +199,6 @@ let timer = 0;
 let jumpTimer = 0;
 let jump = false;
 let dbjump = false;
-let animation;
-
-//게임실행
-function game() {
-  requestAnimationFrame(game);
-  timer++;
-
-  //전체 영역 클리어
-  ctxMain.clearRect(0, 0, canvasMain.width, canvasMain.height);
-  ctxBackground.clearRect(0, 0, canvasBackground.width, canvasBackground.width);
-
-  //땅, 장애물 올라타기
-
-  for (let i = 0; i < floor.length; i++) {
-    if (
-      player.y + player.height <= floor[i].y &&
-      player.y + player.height + player.yspeed >= floor[i].y &&
-      player.x + player.width >= floor[i].x &&
-      player.x <= floor[i].x + floor[i].width
-    ) {
-      player.yspeed = 0;
-      jumpTimer = 0;
-      jump = false;
-      dbjump = false;
-      if (player.state != "slide") {
-        player.state = "run";
-      }
-    }
-  }
-
-  jumpSkill();
-
-  //맵그리기, 캐릭터 그리기, 점수 그리기, 젤리 그리기
-  background.draw();
-
-  if (testJelly1.getEater() == false) {
-    jellyEat(player, testJelly1);
-  }
-  if (testJelly2.getEater() == false) {
-    jellyEat(player, testJelly2);
-  }
-
-  floor.forEach((floor) => {
-    floor.draw();
-  });
-  drawScore.draw();
-  player.update();
-
-  console.log(jumpTimer);
-  console.log(player.state);
-}
-
-//실행
-game();
 
 //젤리먹기 충돌체크
 function jellyEat(player, _jelly) {
@@ -303,6 +220,7 @@ function jellyEat(player, _jelly) {
 
 let isSliding = false;
 
+//키 이벤트
 document.addEventListener("keydown", function (key) {
   if (player.state == "run") {
     switch (key.code) {
@@ -376,3 +294,53 @@ document.addEventListener("keyup", function (key) {
       }
   }
 });
+
+//게임실행
+function game() {
+  requestAnimationFrame(game);
+  timer++;
+
+  //전체 영역 클리어
+  ctxMain.clearRect(0, 0, canvasMain.width, canvasMain.height);
+  ctxBackground.clearRect(0, 0, canvasBackground.width, canvasBackground.width);
+
+  //땅, 장애물 올라타기
+
+  for (let i = 0; i < floor.length; i++) {
+    if (
+      player.y + player.height <= floor[i].y &&
+      player.y + player.height + player.yspeed >= floor[i].y &&
+      player.x + player.width >= floor[i].x &&
+      player.x <= floor[i].x + floor[i].width
+    ) {
+      player.yspeed = 0;
+      jumpTimer = 0;
+      jump = false;
+      dbjump = false;
+      if (player.state != "slide") {
+        player.state = "run";
+      }
+    }
+  }
+
+  jumpSkill();
+
+  //맵그리기, 캐릭터 그리기, 점수 그리기, 젤리 그리기
+  background.draw();
+
+  if (testJelly1.getEater() == false) {
+    jellyEat(player, testJelly1);
+  }
+  if (testJelly2.getEater() == false) {
+    jellyEat(player, testJelly2);
+  }
+
+  floor.forEach((floor) => {
+    floor.draw();
+  });
+  drawScore.draw();
+  player.update();
+}
+
+//실행
+game();
