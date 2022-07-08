@@ -151,14 +151,12 @@ router.post('/signup', (req, res) => {
         else {
             console.log('쿼리문 정상작동') //sql 문구가 에러 없이 정상 작동함
             if (result[0] == undefined) {
-                console.log(result)
                 res.send('usable')
             } else {
                 console.log('사용자 있음 다른 아이디 사용하셈')
                 res.send('disusable')
             }
         }
-        
     })
 })
 

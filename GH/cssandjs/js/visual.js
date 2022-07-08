@@ -11,14 +11,14 @@ export class Visual {
     this.mouse = {
       x: 0,
       y: 0,
-      radius: 30,
+      radius: 40,
     };
 
     document.addEventListener("pointermove", this.onMove.bind(this), false);
   }
 
   show(stageWidth, stageHeight) {
-    this.pos = this.text.setText("LIFE is run", 10, stageWidth, stageHeight);
+    this.pos = this.text.setText("LIFE IS RUN", 10, stageWidth, stageHeight);
     this.posTotal = this.pos.length - 1;
   }
 
