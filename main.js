@@ -212,16 +212,23 @@ let point = 0;
 
 //점수표
 let drawScore = {
-  x: 10,
-  y: 10,
-  width: 50,
-  height: 50,
   draw() {
     ctxMain.font = "20px Arial";
     ctxMain.fillStyle = "Black";
     ctxMain.fillText("점수: " + point, 30, 30);
   },
 };
+
+let imgBtn = new Image();
+imgBtn.src = "images/playicon.png";
+let Btn = {
+  drawBtn() {
+    ctxMain.drawImage(imgBtn, 900, 30, 20, 20);
+    ctxMain.strokeStyle = "black";
+    // ctxMain.globalAlpha = "0.7";
+    ctxMain.strokeRect(898, 28, 24, 24);    
+  }
+}
 
 //전역변수(timer=프레임, jumpTimer = 점프시간)
 let timer = 0;
@@ -275,6 +282,7 @@ function game() {
   });
   drawScore.draw();
   player.update();
+  Btn.drawBtn();
 
   console.log(jumpTimer);
   console.log(player.state);
