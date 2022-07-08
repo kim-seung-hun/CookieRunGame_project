@@ -25,18 +25,11 @@
       <!-- loogin position 구성할 div 생성-->
       <div id="logBodyLeft">
         <div class="cong">
-          <%=isId%>님 환영합니다
+          <%=isId%>님 <br><br> 환영합니다!
             <input type="hidden" id="registDate" value="<%=time%>" />
         </div>
         <div class="cong">
             <label for="id" id="livetime"></label>
-        </div>
-        <div id="joinFind">
-          <a
-            href=""
-            onclick="window.open(this.href,'my information','width=800px , height=650px , toolbar-no , scrollbars=yes'); return false;"
-            ><span>my information</span></a
-          >
         </div>
         <!-- loogin content3 -->
         <div class="log_btn1">
@@ -44,10 +37,17 @@
             <button class="log_btn2">GAME START</button>
           </div>
         </div>
-        <div class="log_btn1">
+        <div class="log_btn1 padding_top">
           <div class="log_btn-outline">
-            <button class="log_btn2 height">LOGOUT</button>
+            <a class="logout" href="">로그아웃 하시겠습니까?</a>
           </div>
+        </div>
+        <div id="joinFind">
+          <a
+            href=""
+            onclick="window.open(this.href,'my information','width=800px , height=650px , toolbar-no , scrollbars=yes'); return false;"
+            ><span>my information</span></a
+          >
         </div>
       </div>
       <!-- ranking 화면 구성할 div 생성 -->

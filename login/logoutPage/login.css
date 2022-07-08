@@ -71,14 +71,15 @@ input:focus::placeholder {
 }
 
 .cong {
-  margin-top: 70px;
+  margin-top: 50px;
   font-size: 25px;
   font-family: "Nanum Gothic Coding", monospace;
   font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .log_btn1 {
-  padding-top: 20px;
+  padding-top: 100px;
   box-sizing: border-box;
 }
 
@@ -100,8 +101,19 @@ input:focus::placeholder {
   font-family: "Nanum Gothic Coding", monospace;
 }
 
+.logout {
+  font-style: italic;
+  font-size: 13px;
+  color: black;
+  font-weight: 500;
+}
+
 .height {
   height: 60px;
+}
+
+.padding_top {
+  padding-top: 20px;
 }
 
 .log_btn2:hover {
@@ -129,13 +141,11 @@ input:focus::placeholder {
 
 #joinFind {
   padding-top: 20px;
-  padding-bottom: 20px;
   display: flex;
   justify-content: center;
 }
 
 #joinFind > a {
-  text-decoration: none;
   color: black;
   font-style: italic;
   font-size: 15px;
@@ -143,11 +153,11 @@ input:focus::placeholder {
   padding-right: 25px;
   font-weight: lighter;
 }
-#joinFind > a:hover {
+/* #joinFind > a:hover {
   transform: scale(1.1);
   font-weight: 500;
   transition: all 0.5s;
-}
+} */
 
 #logBodyRight {
   border: solid thin rgba(27, 26, 26, 0.3);
@@ -222,16 +232,7 @@ h3 {
   height: 100%;
   letter-spacing: 10px;
   margin-top: 50px;
-  background-image: linear-gradient(
-    170deg,
-    red,
-    orange,
-    yellow,
-    green,
-    blue,
-    navy,
-    purple
-  );
+  background-image: linear-gradient(180deg, red, green, blue, navy, purple);
   -webkit-background-clip: text;
   color: transparent;
 }
