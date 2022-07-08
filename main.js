@@ -1,40 +1,10 @@
-let canvasMap = document.getElementById("map");
-let ctxMap = canvasMap.getContext("2d");
-
-canvasMap.width = 2000;
-canvasMap.height = 600;
-
-let backgroundImg = new Image();
-backgroundImg.src = "images/Map/first.png";
-
-//배경 객체선언 및 할당
-let background = {
-  x: 0,
-  y: 0,
-  width: 2000,
-  height: 600,
-  time: 0,
-  a: 1,
-  draw() {
-    this.time++;
-    this.x -= 0.05;
-    if (this.time % 1000 == 0) {
-      this.a -= 0.01;
-    }
-    ctxMap.globalAlpha = this.a;
-    // ctxMap.fillStyle = "black";
-    // ctxMap.fillRect(this.x, this.y, this.width, this.height);
-    ctxMap.drawImage(backgroundImg, this.x, this.y, this.width, this.height);
-  },
-};
-
 //캔버스 변수 선언, 할당
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
+let canvasMain = document.getElementById("main");
+let ctxMain = canvasMain.getContext("2d");
 
 //캔버스 크기
-canvas.width = 2000;
-canvas.height = 600;
+canvasMain.width = 2000;
+canvasMain.height = 600;
 
 //중력설정
 const gravity = 0.01;
@@ -135,13 +105,13 @@ let player = {
       }
     }
     //히트박스 설정
-    ctx.fillStyle = "green";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctxMain.fillStyle = "green";
+    ctxMain.fillRect(this.x, this.y, this.width, this.height);
     //포인트박스 설정
-    ctx.fillStyle = "yellow";
-    ctx.fillRect(this.x + 17, this.y + 20, 50, 50);
+    ctxMain.fillStyle = "yellow";
+    ctxMain.fillRect(this.x + 17, this.y + 20, 50, 50);
     //조건 ? 맞는거 : 틀린거
-    ctx.drawImage(
+    ctxMain.drawImage(
       this.state == "run"
         ? runPlayer[this.index]
         : this.state == "slide"
@@ -167,7 +137,7 @@ let player = {
     this.yspeed += gravity;
 
     //바닥에 캐릭터 닿으면 멈추기
-    if (this.y + this.height <= canvas.height) {
+    if (this.y + this.height <= canvasMain.height) {
       this.yspeed += gravity;
     } else this.yspeed = 0;
   },
@@ -180,25 +150,23 @@ function jumpSkill() {
     player.y -= 2;
     jumpTimer++;
   }
-
   //점프시간이 100 넘어가면 상승 끝
   if (jumpTimer > 100 && player.state == "jump") {
     player.y -= 0;
   }
-  // //점프타이머가 199이상이면 점프해제
-  // if (jumpTimer > 199 && player.state == "jump") {
-  //   jump = false;
-  //   jumpTimer = 0;
-  // }
-
   //더블점프
   if (dbjump == true) {
     player.y -= 1.5;
     jumpTimer++;
   }
-
+  if (player.state == "dbjumpstart" && jumpTimer > 50) {
+    player.state = "dbjump";
+  }
+  if (player.state == "dbjump" && jumpTimer > 300) {
+    player.state = "dbjumplast";
+  }
   //더블 점프 & 점프타이머 100 넘어가면 상승 끝
-  if (player.state == "dbjump" && jumpTimer > 100) {
+  if (player.state == "dbjump" && jumpTimer > 300) {
     player.y -= 0;
   }
 }
@@ -229,10 +197,10 @@ class Jelly {
     if (this.time % this.speed === 1) {
       this.x--;
     }
-    ctx.fillStyle = "yellow";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
-    ctx.globalAlpha = 1;
-    ctx.drawImage(imgJelly, this.x, this.y, this.width, this.height);
+    ctxMain.fillStyle = "yellow";
+    ctxMain.fillRect(this.x, this.y, this.width, this.height);
+    ctxMain.globalAlpha = 1;
+    ctxMain.drawImage(imgJelly, this.x, this.y, this.width, this.height);
   }
 }
 
@@ -249,9 +217,9 @@ let drawScore = {
   width: 50,
   height: 50,
   draw() {
-    ctx.font = "20px Arial";
-    ctx.fillStyle = "Black";
-    ctx.fillText("점수: " + point, 30, 30);
+    ctxMain.font = "20px Arial";
+    ctxMain.fillStyle = "Black";
+    ctxMain.fillText("점수: " + point, 30, 30);
   },
 };
 
@@ -268,8 +236,8 @@ function game() {
   timer++;
 
   //전체 영역 클리어
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctxMap.clearRect(0, 0, canvasMap.width, canvasMap.width);
+  ctxMain.clearRect(0, 0, canvasMain.width, canvasMain.height);
+  ctxBackground.clearRect(0, 0, canvasBackground.width, canvasBackground.width);
 
   //땅, 장애물 올라타기
 
@@ -284,7 +252,9 @@ function game() {
       jumpTimer = 0;
       jump = false;
       dbjump = false;
-      player.state = "run";
+      if (player.state != "slide") {
+        player.state = "run";
+      }
     }
   }
 
@@ -300,19 +270,14 @@ function game() {
     jellyEat(player, testJelly2);
   }
 
-  // jelly.forEach((Jelly, i, jellyArray) => {
-  //   if (Jelly.x < 0) {
-  //     jellyArray.splice(i, 1);
-  //   }
-  //   Jelly.x -= 0.3;
-  //   Jelly.draw();
-  // });
   floor.forEach((floor) => {
     floor.draw();
   });
   drawScore.draw();
   player.update();
-  console.log(player.y);
+
+  console.log(jumpTimer);
+  console.log(player.state);
 }
 
 //실행
@@ -324,8 +289,7 @@ function jellyEat(player, _jelly) {
   let eatJellyY = _jelly.y - player.y;
   if (eatJellyX < 60 && eatJellyX > -60 && eatJellyY < 60 && eatJellyY > -60) {
     _jelly.setEater();
-    ctx.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
-    // firstMap.draw();
+    ctxMain.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
     point += 10000;
   } else if (_jelly.getEater() == false) {
     _jelly.draw();
@@ -360,7 +324,7 @@ document.addEventListener("keydown", function (key) {
     switch (key.code) {
       case "Space":
         jumpTimer = 0;
-        player.state = "dbjump";
+        player.state = "dbjumpstart";
         dbjump = true;
         break;
     }
@@ -376,9 +340,15 @@ document.addEventListener("keydown", function (key) {
       break;
 
     case "ArrowDown":
-      if (player.state == "jump" || jump == "true") {
+      if (
+        player.state == "jump" ||
+        jump == "true" ||
+        player.state == "dbjumpstart" ||
+        player.state == "dbjump" ||
+        player.state == "dbjumplast"
+      ) {
         return;
-      } else {
+      } else if (player.state == "run") {
         player.state = "slide";
         player.height = 55;
         player.width = 95;
@@ -397,20 +367,10 @@ document.addEventListener("keyup", function (key) {
     case "ArrowDown":
       if (player.state == "slide") {
         player.state = "run";
-        if (isSliding && jump == true) {
-          isSliding = false;
-          player.height = 90;
-          player.width = 80;
-        } else if (isSliding && player.state == "run") {
-          player.y = player.y - 35;
-          isSliding = false;
-          player.height = 90;
-          player.width = 80;
-        } else if (!isSliding && player.state == "run") {
-          isSliding = false;
-          player.height = 90;
-          player.width = 80;
-        }
+        isSliding = false;
+        player.height = 90;
+        player.width = 80;
+        player.y = player.y - 35;
 
         break;
       }
