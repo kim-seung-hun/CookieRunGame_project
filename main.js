@@ -9,11 +9,7 @@ canvasMain.height = 600;
 //중력설정
 const gravity = 0.01;
 
-//폰트적용
-let font = new FontFace("point", "images/Font/a공주를부탁해.ttf");
-font.load().then(function () {});
-
-//플레이어 설정
+//플레이어 설정 speed 낮추면 플레이어 움직임 속도 up
 let player = {
   x: 120,
   y: 410,
@@ -160,7 +156,7 @@ function jumpSkill() {
   }
   //더블점프
   if (dbjump == true) {
-    player.y -= 2.5;
+    player.y -= 1.7;
     jumpTimer++;
   }
   if (player.state == "dbjumpstart" && jumpTimer > 50) {
@@ -180,40 +176,29 @@ let point = 0;
 let pointImg = new Image();
 pointImg.src = "images/Map/point.png";
 
+//폰트적용 점수
+let font = new FontFace("pointFont", "url(images/Font/a공주를부탁해.ttf)");
+font.load().then(function () {
+  console.log("");
+  ctxMain.font = "25px pointFont";
+});
+
 //점수표
 let drawScore = {
-  x: 10,
-  y: 10,
-  width: 50,
-  height: 50,
   draw() {
-    ctxMain.font = "bold 20px point";
-    ctxMain.fillStyle = "Black";
-    ctxMain.drawImage(pointImg, 450, 77, 30, 30);
-    ctxMain.fillText(point, 500, 100, 200);
+    ctxMain.fillStyle = "black";
+    ctxMain.fillText(point, 450, 120, 300);
+    ctxMain.drawImage(pointImg, 410, 97, 30, 30);
   },
 };
 
-//전역변수(timer=프레임, jumpTimer = 점프시간)
-let timer = 0;
+//전역변수(frame=프레임, jumpTimer = 점프시간)
+let frame = 0;
 let jumpTimer = 0;
 let jump = false;
 let dbjump = false;
 
-//젤리먹기 충돌체크
-function jellyEat(player, _jelly) {
-  let eatJellyX = _jelly.x - player.x;
-  let eatJellyY = _jelly.y - player.y;
-  if (eatJellyX < 60 && eatJellyX > -60 && eatJellyY < 60 && eatJellyY > -60) {
-    _jelly.setEater();
-    ctxMain.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
-    point += 10000;
-  } else if (_jelly.getEater() == false) {
-    _jelly.draw();
-  }
-}
-
-//키 코드 확인
+//키 코드 확인3
 // addEventListener("keydown", function () {
 //   console.log(this.event);
 // });
@@ -297,8 +282,8 @@ document.addEventListener("keyup", function (key) {
 
 //게임실행
 function game() {
+  frame++;
   requestAnimationFrame(game);
-  timer++;
 
   //전체 영역 클리어
   ctxMain.clearRect(0, 0, canvasMain.width, canvasMain.height);

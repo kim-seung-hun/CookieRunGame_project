@@ -33,3 +33,16 @@ class Jelly {
 
 let testJelly1 = new Jelly({ x: 750, y: 300, width: 100, height: 100 });
 let testJelly2 = new Jelly({ x: 1050, y: 350, width: 100, height: 100 });
+
+//젤리먹기 충돌체크
+function jellyEat(player, _jelly) {
+  let eatJellyX = _jelly.x - player.x;
+  let eatJellyY = _jelly.y - player.y;
+  if (eatJellyX < 60 && eatJellyX > -60 && eatJellyY < 60 && eatJellyY > -60) {
+    _jelly.setEater();
+    ctxMain.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
+    point += 100000000000;
+  } else if (_jelly.getEater() == false) {
+    _jelly.draw();
+  }
+}
