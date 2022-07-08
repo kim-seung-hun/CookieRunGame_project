@@ -70,63 +70,14 @@ input:focus::placeholder {
   height: 100%;
 }
 
-.login {
-  padding-top: 15px;
-  font-size: 13px;
-  display: flex;
+.cong {
+  margin-top: 50px;
+  font-size: 25px;
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
-.log_icon {
-  padding-top: 30px;
-  padding-bottom: 10px;
-}
-.img_log {
-  width: 150px;
-  height: 150px;
-  opacity: 0.7;
-}
-
-.img_id {
-  width: 20px;
-  height: 20px;
-  opacity: 0.6;
-}
-
-.img_center {
-  margin: auto 0;
-}
-
-.log_pw {
-  padding-top: 30px;
-  padding-bottom: 10px;
-}
-.user_id {
-  background-color: rgba(255, 255, 255, 0);
-  position: relative;
-  width: 90%;
-  height: 51px;
-  border: solid 1px black;
-  border-width: 0 0 1px 0;
-  padding: 10px 14px 10px 14px;
-  vertical-align: top;
-  outline: none;
-  text-align: start;
-  text-shadow: 0 0 0 black;
-}
-.user_pw {
-  background-color: rgba(255, 255, 255, 0);
-  position: relative;
-  width: 90%;
-  height: 51px;
-  border: solid 1px black;
-  border-width: 0 0 1px 0;
-  padding: 10px 14px 10px 14px;
-  vertical-align: top;
-  outline: none;
-  color: transparent;
-  text-shadow: 0 0 0 black;
-  text-align: start;
-}
 .log_btn1 {
   padding-top: 20px;
   box-sizing: border-box;
@@ -136,7 +87,7 @@ input:focus::placeholder {
   border: solid 3px rgb(43, 37, 37);
   position: relative;
   width: 90%;
-  height: 50px;
+  height: 100px;
   padding: 10px 20px 10px 20px;
   box-sizing: border-box;
   background: rgba(63, 56, 56, 0);
@@ -145,9 +96,24 @@ input:focus::placeholder {
   cursor: pointer;
   font-size: 17px;
   border-radius: 5px;
-  margin-left: 20px;
+  margin-left: 10px;
   letter-spacing: 5px;
   font-family: "Nanum Gothic Coding", monospace;
+}
+
+.logout {
+  font-style: italic;
+  font-size: 13px;
+  color: black;
+  font-weight: 500;
+}
+
+.height {
+  height: 60px;
+}
+
+.padding_top {
+  padding-top: 20px;
 }
 
 .log_btn2:hover {
@@ -176,11 +142,10 @@ input:focus::placeholder {
 #joinFind {
   padding-top: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 #joinFind > a {
-  text-decoration: none;
   color: black;
   font-style: italic;
   font-size: 15px;
@@ -188,11 +153,11 @@ input:focus::placeholder {
   padding-right: 25px;
   font-weight: lighter;
 }
-#joinFind > a:hover {
+/* #joinFind > a:hover {
   transform: scale(1.1);
   font-weight: 500;
   transition: all 0.5s;
-}
+} */
 
 #logBodyRight {
   border: solid thin rgba(27, 26, 26, 0.3);

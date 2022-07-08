@@ -4,6 +4,10 @@
   margin: 0;
 }
 
+h1 {
+  font-family: "Nanum Gothic Coding", monospace;
+}
+
 #join_title {
   letter-spacing: 15px;
   padding-top: 30px;
@@ -56,7 +60,7 @@
   margin-top: 5px;
   margin-right: 3px;
   justify-content: space-between;
-  background-color: rgb(48, 46, 46);
+  background-color: rgb(49, 48, 48);
   color: rgb(250, 246, 246);
   border-radius: 5px;
   width: 30%;
