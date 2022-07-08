@@ -3,7 +3,7 @@ setInterval(() => {
     
     let registDate = $('#registDate').val();
     let regist = new Date(registDate)
-    console.log(typeof(registDate))
+    
     
     let livetime = Math.floor((time.getTime() - regist.getTime()) / 1000)
     let day = Math.floor(livetime / 86400); 
