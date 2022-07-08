@@ -18,31 +18,45 @@
     #canvasBox {
       width: 1000px;
       height: 600px;
+      border-radius: 30px;
       position: relative;
       overflow: hidden;
     }
-    #canvas {
-      position: absolute;
-    }
+
     #background {
       position: absolute;
     }
-    #map {
+    #floor {
       position: absolute;
     }
     #hurdle {
       position: absolute;
     }
+    #jelly {
+      position: absolute;
+    }
+    #main {
+      position: absolute;
+      font-family: "pointFont";
+    }
+    @font-face {
+      font-family: "pointFont";
+      src: url(images/Font/a공주를부탁해.ttf);
+    }
   </style>
   <body>
     <div id="canvasBox">
-      <canvas id="map"></canvas>
-      <canvas id="canvas"></canvas>
-      <canvas id="hurdle"></canvas>
+      <canvas id="background"></canvas>
+      <canvas id="main"></canvas>
     </div>
   </body>
-  <script src="map.js"></script>
+  <script src="background.js"></script>
+  <script src="floor.js"></script>
+  <script src="hurdle.js"></script>
+  <script src="jelly.js"></script>
   <script src="main.js"></script>
-  <!-- <script src="hurdle.js"></script> -->
 </html>
+<<<<<<<< HEAD:MS/canvas.html
 <!-- 충돌용 -->
+========
+>>>>>>>> MS:game.html
