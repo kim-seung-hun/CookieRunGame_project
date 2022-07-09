@@ -177,9 +177,8 @@ let pointImg = new Image();
 pointImg.src = "images/Map/point.png";
 
 //폰트적용 점수
-let font = new FontFace("pointFont", "url(images/Font/a공주를부탁해.ttf)");
+let font = new FontFace("pointFont", "url(images/Font/CookieRunRegular.ttf)");
 font.load().then(function () {
-  console.log("");
   ctxMain.font = "25px pointFont";
 });
 
@@ -187,7 +186,7 @@ font.load().then(function () {
 let drawScore = {
   draw() {
     ctxMain.fillStyle = "black";
-    ctxMain.fillText(point, 450, 120, 300);
+    ctxMain.fillText(point.toLocaleString("ko-KR"), 450, 120, 300);
     ctxMain.drawImage(pointImg, 410, 97, 30, 30);
   },
 };

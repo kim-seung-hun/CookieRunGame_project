@@ -41,7 +41,7 @@ function jellyEat(player, _jelly) {
   if (eatJellyX < 60 && eatJellyX > -60 && eatJellyY < 60 && eatJellyY > -60) {
     _jelly.setEater();
     ctxMain.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
-    point += 100000000000;
+    point += 1000;
   } else if (_jelly.getEater() == false) {
     _jelly.draw();
   }
