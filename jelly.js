@@ -20,8 +20,8 @@ class Jelly {
   }
   draw() {
     this.time++;
-    if (this.time % 2 == 1) {
-      this.x -= 1.25;
+    if (this.time % 1 == 0) {
+      this.x -= 2.55;
     }
     // ctxMain.fillStyle = "yellow";
     // ctxMain.fillRect(this.x, this.y, this.width, this.height);
