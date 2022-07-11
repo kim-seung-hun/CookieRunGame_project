@@ -147,7 +147,7 @@ for (let i = 0; i < 4; i++) {
 function jumpSkill() {
   //점프시 점프값 증가 & 이미지 변경
   if (jump == true) {
-    player.y -= 2.15;
+    player.y -= 2;
     jumpTimer++;
   }
   //점프시간이 100 넘어가면 상승 끝
@@ -156,7 +156,7 @@ function jumpSkill() {
   }
   //더블점프
   if (dbjump == true) {
-    player.y -= 1.55;
+    player.y -= 1.5;
     jumpTimer++;
   }
   if (player.state == "dbjumpstart" && jumpTimer > 50) {
