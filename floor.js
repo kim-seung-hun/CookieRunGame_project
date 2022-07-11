@@ -47,7 +47,7 @@ class Floor1 extends Floor {
 
 let floor = [
   new Floor({ x: 0, y: 510, width: 800, height: 90 }),
-  new Floor({ x: 800, y: 510, width: 800, height: 90 }),
+
   new Floor({ x: 1600, y: 510, width: 800, height: 90 }),
   new Floor({ x: 2400, y: 510, width: 800, height: 90 }),
   new Floor({ x: 3200, y: 510, width: 800, height: 90 }),
