@@ -18,8 +18,8 @@ class Floor {
   }
   draw() {
     this.time++;
-    if (this.time % 2 == 1) {
-      this.x -= 1.25;
+    if (this.time % 1 == 0) {
+      this.x -= 2.55;
     }
     ctxMain.drawImage(floorImg10, this.x, this.y, this.width, this.height);
   }
@@ -28,8 +28,8 @@ class Floor {
 class Floor5 extends Floor {
   draw() {
     this.time++;
-    if (this.time % 2 == 1) {
-      this.x -= 1.25;
+    if (this.time % 1 == 0) {
+      this.x -= 2.55;
     }
     ctxMain.drawImage(floor5Img, this.x, this.y, this.width, this.height);
   }
@@ -38,8 +38,8 @@ class Floor5 extends Floor {
 class Floor1 extends Floor {
   draw() {
     this.time++;
-    if (this.time % 2 == 1) {
-      this.x -= 1.25;
+    if (this.time % 1 == 0) {
+      this.x -= 2.55;
     }
     ctxMain.drawImage(floor1Img, this.x, this.y, this.width, this.height);
   }

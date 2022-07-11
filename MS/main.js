@@ -7,17 +7,17 @@ canvasMain.width = 2000;
 canvasMain.height = 600;
 
 //중력설정
-const gravity = 0.0095;
+const gravity = 0.02;
 
 //플레이어 설정 speed 낮추면 플레이어 움직임 속도 up
 let player = {
   x: 120,
-  y: 410,
+  y: 400,
   width: 80,
   height: 90,
-  yspeed: 15,
+  yspeed: 0,
   index: 0,
-  speed: 13,
+  speed: 3,
   time: 0,
   state: "run",
   draw() {
@@ -62,9 +62,10 @@ let player = {
     this.yspeed += gravity;
 
     //바닥에 캐릭터 닿으면 순간 yspeed를 0으로 만들어서 띄움
-    if (this.y + this.height <= canvasMain.height) {
-      this.yspeed += gravity;
-    } else this.yspeed = 0;
+    for (let i = 0; i < floor.length; i++)
+      if (this.y + this.height >= floor[i].height - 1) {
+        this.yspeed += gravity;
+      } else this.yspeed = 0;
   },
 };
 
@@ -147,22 +148,22 @@ for (let i = 0; i < 4; i++) {
 function jumpSkill() {
   //점프시 점프값 증가 & 이미지 변경
   if (jump == true) {
-    player.y -= 2.15;
+    player.y -= 7.75;
     jumpTimer++;
   }
   //점프시간이 100 넘어가면 상승 끝
-  if (jumpTimer > 10 && player.state == "jump") {
+  if (jumpTimer > 1 && player.state == "jump") {
     player.y -= 0;
   }
   //더블점프
   if (dbjump == true) {
-    player.y -= 1.55;
+    player.y -= 5.25;
     jumpTimer++;
   }
   if (player.state == "dbjumpstart" && jumpTimer > 50) {
     player.state = "dbjump";
   }
-  if (player.state == "dbjump" && jumpTimer > 300) {
+  if (player.state == "dbjump" && jumpTimer > 120) {
     player.state = "dbjumplast";
   }
   //더블 점프 & 점프타이머 100 넘어가면 상승 끝
@@ -216,13 +217,13 @@ document.addEventListener("keydown", function (key) {
           player.width = 80;
           player.state = "jump";
         }
-        player.y = player.y + 0.5;
+        player.y = player.y - 0.1;
         player.state = "jump";
         jump = true;
         break;
     }
   }
-  if (player.state == "jump" && jumpTimer > 1) {
+  if (player.state == "jump" && jumpTimer > 10) {
     switch (key.code) {
       case "Space":
         jumpTimer = 0;
@@ -292,11 +293,11 @@ function game() {
 
   for (let i = 0; i < floor.length; i++) {
     if (
-      player.y + player.height <= floor[i].y &&
-      player.y + player.height + player.yspeed >= floor[i].y &&
+      player.y + player.height >= floor[i].y &&
       player.x + player.width - 10 >= floor[i].x &&
       player.x + 30 <= floor[i].x + floor[i].width
     ) {
+      player.y = 420;
       player.yspeed = 0;
       jumpTimer = 0;
       jump = false;
@@ -322,6 +323,7 @@ function game() {
   });
   drawScore.draw();
   player.update();
+  console.log(player.y);
 }
 
 //실행
