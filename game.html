@@ -14,6 +14,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      outline: none;
     }
     #tv {
       position: relative;
@@ -46,10 +47,46 @@
     #main {
       position: absolute;
     }
-    #test {
+
+    .Btn {
       position: absolute;
-      right: 100px;
+      right: 120px;
+      width: 20px;
+      height: 20px;
       z-index: 1;
+      cursor: pointer;
+    }
+    #playBtn {     
+      top: 30px;      
+    }    
+    #pauseBtn {      
+      top: 60px;      
+    }        
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    #UI {
+      position: absolute;
+      top: 100px;
+      left: 100px;      
+      width: 80vh;
+      height: 40vh;
+      border: 1px solid black;
+      z-index: 1;
+    }
+    .map {
+      position: absolute;
+      border: 1px solid black;
+      width: 30px;
+      height: 30px;
+      top: 120px;
+    }
+    #map1 {
+      left: 30px;
+    }
+    #map2 {
+      left: 60px;
     }
   </style>
   <body>
@@ -58,11 +95,19 @@
       <canvas id="floor"></canvas>
       <canvas id="hurdle"></canvas>
       <canvas id="main"></canvas>
-      <div id="test">test</div>
-    </div>
+      <img src="images/playicon2.png" alt="" id="playBtn" class="Btn">
+      <img src="images/pauseicon.png" alt="" id="pauseBtn" class="Btn">
+      <div id="UI">
+        <div class="map" id="map1"></div>
+        <div class="map" id="map2"></div>
+        <div class="map" id="map3"></div>
+        <div class="map" id="map4"></div>
+        <div class="map" id="map5"></div>
+      </div>
   </body>
+  <script src="UI.js"></script>
   <script src="background.js"></script>
   <script src="floor.js"></script>
   <script src="hurdle.js"></script>
-  <script src="main.js"></script>
+  <script src="main.js"></script>  
 </html>

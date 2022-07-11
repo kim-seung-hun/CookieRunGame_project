@@ -92,7 +92,7 @@ let player = {
   height: 90,
   yspeed: 1,
   index: 0,
-  speed: 15,
+  speed: Math.floor(13/3),
   time: 0,
   state: "run",
   draw() {
@@ -237,9 +237,22 @@ let jump = false;
 let dbjump = false;
 let animation;
 
+//시작 멈춤 버튼 상태
+playBtn.addEventListener('click', function () {
+  continueAnimating = true;
+})
+pauseBtn.addEventListener('click', function () {
+  continueAnimating = false;
+})
+
 //게임실행
 function game() {
-  requestAnimationFrame(game);
+  //멈춤 버튼 클릭시 애니메이션 멈춤
+  // if (!continueAnimating) { return; }
+  if (!continueAnimating) {
+    cancelAnimationFrame(game);
+  } else { requestAnimationFrame(game) };
+  
   timer++;
 
   //전체 영역 클리어
