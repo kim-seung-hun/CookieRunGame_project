@@ -7,7 +7,7 @@ canvasMain.width = 2000;
 canvasMain.height = 600;
 
 //중력설정
-const gravity = 0.01;
+const gravity = 0.0095;
 
 //플레이어 설정 speed 낮추면 플레이어 움직임 속도 up
 let player = {
@@ -15,9 +15,9 @@ let player = {
   y: 410,
   width: 80,
   height: 90,
-  yspeed: 1,
+  yspeed: 15,
   index: 0,
-  speed: 15,
+  speed: 13,
   time: 0,
   state: "run",
   draw() {
@@ -30,11 +30,11 @@ let player = {
       }
     }
     //히트박스 설정
-    ctxMain.fillStyle = "green";
-    ctxMain.fillRect(this.x, this.y, this.width, this.height);
+    // ctxMain.fillStyle = "green";
+    // ctxMain.fillRect(this.x, this.y, this.width, this.height);
     //포인트박스 설정
-    ctxMain.fillStyle = "yellow";
-    ctxMain.fillRect(this.x + 17, this.y + 20, 50, 50);
+    // ctxMain.fillStyle = "yellow";
+    // ctxMain.fillRect(this.x + 17, this.y + 20, 50, 50);
     //조건 ? 맞는거 : 틀린거
     ctxMain.drawImage(
       this.state == "run"
@@ -61,7 +61,7 @@ let player = {
     this.y += this.yspeed;
     this.yspeed += gravity;
 
-    //바닥에 캐릭터 닿으면 멈추기
+    //바닥에 캐릭터 닿으면 순간 yspeed를 0으로 만들어서 띄움
     if (this.y + this.height <= canvasMain.height) {
       this.yspeed += gravity;
     } else this.yspeed = 0;
@@ -147,16 +147,16 @@ for (let i = 0; i < 4; i++) {
 function jumpSkill() {
   //점프시 점프값 증가 & 이미지 변경
   if (jump == true) {
-    player.y -= 2;
+    player.y -= 2.15;
     jumpTimer++;
   }
   //점프시간이 100 넘어가면 상승 끝
-  if (jumpTimer > 100 && player.state == "jump") {
+  if (jumpTimer > 10 && player.state == "jump") {
     player.y -= 0;
   }
   //더블점프
   if (dbjump == true) {
-    player.y -= 1.7;
+    player.y -= 1.55;
     jumpTimer++;
   }
   if (player.state == "dbjumpstart" && jumpTimer > 50) {
@@ -166,7 +166,7 @@ function jumpSkill() {
     player.state = "dbjumplast";
   }
   //더블 점프 & 점프타이머 100 넘어가면 상승 끝
-  if (player.state == "dbjump" && jumpTimer > 300) {
+  if (player.state == "dbjump" && jumpTimer > 10) {
     player.y -= 0;
   }
 }
@@ -288,14 +288,14 @@ function game() {
   ctxMain.clearRect(0, 0, canvasMain.width, canvasMain.height);
   ctxBackground.clearRect(0, 0, canvasBackground.width, canvasBackground.width);
 
-  //땅, 장애물 올라타기
+  //땅 올라타기
 
   for (let i = 0; i < floor.length; i++) {
     if (
       player.y + player.height <= floor[i].y &&
       player.y + player.height + player.yspeed >= floor[i].y &&
-      player.x + player.width >= floor[i].x &&
-      player.x <= floor[i].x + floor[i].width
+      player.x + player.width - 10 >= floor[i].x &&
+      player.x + 30 <= floor[i].x + floor[i].width
     ) {
       player.yspeed = 0;
       jumpTimer = 0;
@@ -307,18 +307,16 @@ function game() {
     }
   }
 
+  for (let i = 0; i < jellyDraw.length; i++) {
+    if (jellyDraw[i].getEater() == false) {
+      jellyEat(player, jellyDraw[i]);
+    }
+  }
+
   jumpSkill();
 
-  //맵그리기, 캐릭터 그리기, 점수 그리기, 젤리 그리기
+  //맵그리기, 땅그리기, 점수 그리기, 젤리 그리기, 캐릭터 그리기
   background.draw();
-
-  if (testJelly1.getEater() == false) {
-    jellyEat(player, testJelly1);
-  }
-  if (testJelly2.getEater() == false) {
-    jellyEat(player, testJelly2);
-  }
-
   floor.forEach((floor) => {
     floor.draw();
   });
