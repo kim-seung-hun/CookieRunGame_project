@@ -19,19 +19,9 @@ class Floor {
   draw() {
     this.time++;
     if (this.time % 2 == 1) {
-      this.x--;
+      this.x -= 1.25;
     }
     ctxMain.drawImage(floorImg10, this.x, this.y, this.width, this.height);
-  }
-}
-
-class Floor1 extends Floor {
-  draw() {
-    this.time++;
-    if (this.time % 2 == 1) {
-      this.x--;
-    }
-    ctxMain.drawImage(floor1Img, this.x, this.y, this.width, this.height);
   }
 }
 
@@ -39,15 +29,25 @@ class Floor5 extends Floor {
   draw() {
     this.time++;
     if (this.time % 2 == 1) {
-      this.x--;
+      this.x -= 1.25;
     }
     ctxMain.drawImage(floor5Img, this.x, this.y, this.width, this.height);
   }
 }
 
+class Floor1 extends Floor {
+  draw() {
+    this.time++;
+    if (this.time % 2 == 1) {
+      this.x -= 1.25;
+    }
+    ctxMain.drawImage(floor1Img, this.x, this.y, this.width, this.height);
+  }
+}
+
 let floor = [
   new Floor({ x: 0, y: 510, width: 800, height: 90 }),
-
+  new Floor({ x: 800, y: 510, width: 800, height: 90 }),
   new Floor({ x: 1600, y: 510, width: 800, height: 90 }),
   new Floor({ x: 2400, y: 510, width: 800, height: 90 }),
   new Floor({ x: 3200, y: 510, width: 800, height: 90 }),
