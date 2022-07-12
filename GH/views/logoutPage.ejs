@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
     <title>LIFE IS RUN</title>
     <link rel="stylesheet" href="/css/logout.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,10 +22,28 @@
   </head>
   <body id="bg">
     <div id="header"></div>
+=======
+    <title>cat mario</title>
+    <link rel="stylesheet" href="/css/logoutPage.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body id="bg">
+    <!-- 게임 제목 -->
+    <div id="header">
+      <%=isId%>님 환영합니다
+    </div>
+>>>>>>> GH
     <!-- loogin 및 ranking Main div 생성 -->
     <div id="logBody">
       <!-- loogin position 구성할 div 생성-->
       <div id="logBodyLeft">
+<<<<<<< HEAD
         <div class="cong"><h5>
           <%=isId%>님 <br><br> 환영합니다!
         </h5>
@@ -32,10 +51,25 @@
         <div class="cong">
           <input type="hidden" id="registDate" value="<%=time%>">
             <h5><label for="id" id="livetime"></label></h5>
+=======
+        <!-- loogin content1 -->
+        <div class="login">
+          <h2 class="log_id">
+            <%=isId%>님 환영합니다 
+            <input type="hidden" id="registDate" value="<%=time%>">
+          </h2>
+        </div>
+        <!-- loogin content2 -->
+        <div class="login">
+          <h3 class="log_pw">
+            <label for="id" id="livetime"></label>
+          </h3>
+>>>>>>> GH
         </div>
         <!-- loogin content3 -->
         <div class="log_btn1">
           <div class="log_btn-outline">
+<<<<<<< HEAD
             <a href="/kg/searchinfo">
               <button class="log_btn2">GAME START</button>
             </a>
@@ -106,3 +140,24 @@
 <!-- test2 -->
 <!-- test3 -->
 <!-- test3.1 -->
+=======
+            <button class="log_btn2">게임시작</button>
+          </div>
+          <div class="log_btn-outline">
+            <form action="/kg/logout" method="get">
+              <button class="logout_btn" id="logout">로그아웃</button>
+            </form>
+          </div>
+        </div>
+        <!-- loogin content4 -->
+        <div id="joinFind">
+          <a href="/kg/searchinfo"><span>내 정보</span></a>
+        </div>
+      </div>
+      <!-- ranking 화면 구성할 div 생성 -->
+      <div id="logBodyRight"></div>
+    </div>
+  </body>
+  <script src="/js/login.js"></script>
+</html>
+>>>>>>> GH

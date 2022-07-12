@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 setInterval(() => {
     let time = new Date();
 
@@ -17,3 +18,13 @@ setInterval(() => {
 
     document.querySelector('#livetime').innerHTML = `가입하신지 ${day}일 ${hour}시간 ${minute}분 ${second}초가 지났습니다.`
 }, 100);
+=======
+let time = new Date();
+
+let registDate = $('#registDate').val();
+
+let livetime = Math.floor((time.getTime() - registDate.getTime())/1000)
+setInterval(() => {
+    document.querySelector('#livetime').innerHTML = livetime
+}, 1000);
+>>>>>>> GH
