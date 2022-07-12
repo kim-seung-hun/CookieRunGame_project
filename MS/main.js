@@ -144,6 +144,68 @@ for (let i = 0; i < 4; i++) {
 
 //피격시 이미지
 
+<<<<<<<< HEAD:MS/main.js
+========
+//플레이어 설정
+let player = {
+  x: 120,
+  y: 410,
+  width: 80,
+  height: 90,
+  yspeed: 1,
+  index: 0,
+  speed: Math.floor(13/3),
+  time: 0,
+  state: "run",
+  draw() {
+    this.time++;
+    if (this.time % this.speed === 0) {
+      if (this.index < 3) {
+        this.index++;
+      } else {
+        this.index = 0;
+      }
+    }
+    //히트박스 설정
+    ctxMain.fillStyle = "green";
+    ctxMain.fillRect(this.x, this.y, this.width, this.height);
+    //포인트박스 설정
+    ctxMain.fillStyle = "yellow";
+    ctxMain.fillRect(this.x + 17, this.y + 20, 50, 50);
+    //조건 ? 맞는거 : 틀린거
+    ctxMain.drawImage(
+      this.state == "run"
+        ? runPlayer[this.index]
+        : this.state == "slide"
+        ? slidePlayer[this.index]
+        : this.state == "jump"
+        ? jumpPlayer[this.index]
+        : this.state == "dbjumpstart"
+        ? dbjumpstartPlayer[this.index]
+        : this.state == "dbjump"
+        ? dbjumpPlayer[this.index]
+        : this.state == "dbjumplast"
+        ? dbjumplastPlayer[this.index]
+        : null,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+  },
+  update() {
+    this.draw();
+    this.y += this.yspeed;
+    this.yspeed += gravity;
+
+    //바닥에 캐릭터 닿으면 멈추기
+    if (this.y + this.height <= canvasMain.height) {
+      this.yspeed += gravity;
+    } else this.yspeed = 0;
+  },
+};
+
+>>>>>>>> CreateUI_newVer:TH/main.js
 //점프기능
 function jumpSkill() {
   //점프시 점프값 증가 & 이미지 변경
@@ -191,13 +253,113 @@ let drawScore = {
   },
 };
 
+<<<<<<<< HEAD:MS/main.js
 //전역변수(frame=프레임, jumpTimer = 점프시간)
 let frame = 0;
+========
+let imgBtn = new Image();
+imgBtn.src = "images/playicon.png";
+let Btn = {
+  drawBtn() {
+    ctxMain.drawImage(imgBtn, 900, 30, 20, 20);
+    ctxMain.strokeStyle = "black";
+    // ctxMain.globalAlpha = "0.7";
+    ctxMain.strokeRect(898, 28, 24, 24);    
+  }
+}
+
+//전역변수(timer=프레임, jumpTimer = 점프시간)
+let timer = 0;
+>>>>>>>> CreateUI_newVer:TH/main.js
 let jumpTimer = 0;
 let jump = false;
 let dbjump = false;
 
+<<<<<<<< HEAD:MS/main.js
 //키 코드 확인3
+========
+//시작 멈춤 버튼 상태
+playBtn.addEventListener('click', function () {
+  continueAnimating = true;
+})
+pauseBtn.addEventListener('click', function () {
+  continueAnimating = false;
+})
+
+//게임실행
+function game() {
+  //멈춤 버튼 클릭시 애니메이션 멈춤
+  // if (!continueAnimating) { return; }
+  if (!continueAnimating) {
+    cancelAnimationFrame(game);
+  } else { requestAnimationFrame(game) };
+  
+  timer++;
+
+  //전체 영역 클리어
+  ctxMain.clearRect(0, 0, canvasMain.width, canvasMain.height);
+  ctxBackground.clearRect(0, 0, canvasBackground.width, canvasBackground.width);
+
+  //땅, 장애물 올라타기
+
+  for (let i = 0; i < floor.length; i++) {
+    if (
+      player.y + player.height <= floor[i].y &&
+      player.y + player.height + player.yspeed >= floor[i].y &&
+      player.x + player.width >= floor[i].x &&
+      player.x <= floor[i].x + floor[i].width
+    ) {
+      player.yspeed = 0;
+      jumpTimer = 0;
+      jump = false;
+      dbjump = false;
+      if (player.state != "slide") {
+        player.state = "run";
+      }
+    }
+  }
+
+  jumpSkill();
+
+  //맵그리기, 캐릭터 그리기, 점수 그리기, 젤리 그리기
+  background.draw();
+
+  if (testJelly1.getEater() == false) {
+    jellyEat(player, testJelly1);
+  }
+  if (testJelly2.getEater() == false) {
+    jellyEat(player, testJelly2);
+  }
+
+  floor.forEach((floor) => {
+    floor.draw();
+  });
+  drawScore.draw();
+  player.update();
+  Btn.drawBtn();
+
+  console.log(jumpTimer);
+  console.log(player.state);
+}
+
+//실행
+game();
+
+//젤리먹기 충돌체크
+function jellyEat(player, _jelly) {
+  let eatJellyX = _jelly.x - player.x;
+  let eatJellyY = _jelly.y - player.y;
+  if (eatJellyX < 60 && eatJellyX > -60 && eatJellyY < 60 && eatJellyY > -60) {
+    _jelly.setEater();
+    ctxMain.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
+    point += 10000;
+  } else if (_jelly.getEater() == false) {
+    _jelly.draw();
+  }
+}
+
+//키 코드 확인
+>>>>>>>> CreateUI_newVer:TH/main.js
 // addEventListener("keydown", function () {
 //   console.log(this.event);
 // });
