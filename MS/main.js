@@ -144,68 +144,6 @@ for (let i = 0; i < 4; i++) {
 
 //피격시 이미지
 
-<<<<<<<< HEAD:MS/main.js
-========
-//플레이어 설정
-let player = {
-  x: 120,
-  y: 410,
-  width: 80,
-  height: 90,
-  yspeed: 1,
-  index: 0,
-  speed: Math.floor(13/3),
-  time: 0,
-  state: "run",
-  draw() {
-    this.time++;
-    if (this.time % this.speed === 0) {
-      if (this.index < 3) {
-        this.index++;
-      } else {
-        this.index = 0;
-      }
-    }
-    //히트박스 설정
-    ctxMain.fillStyle = "green";
-    ctxMain.fillRect(this.x, this.y, this.width, this.height);
-    //포인트박스 설정
-    ctxMain.fillStyle = "yellow";
-    ctxMain.fillRect(this.x + 17, this.y + 20, 50, 50);
-    //조건 ? 맞는거 : 틀린거
-    ctxMain.drawImage(
-      this.state == "run"
-        ? runPlayer[this.index]
-        : this.state == "slide"
-        ? slidePlayer[this.index]
-        : this.state == "jump"
-        ? jumpPlayer[this.index]
-        : this.state == "dbjumpstart"
-        ? dbjumpstartPlayer[this.index]
-        : this.state == "dbjump"
-        ? dbjumpPlayer[this.index]
-        : this.state == "dbjumplast"
-        ? dbjumplastPlayer[this.index]
-        : null,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    );
-  },
-  update() {
-    this.draw();
-    this.y += this.yspeed;
-    this.yspeed += gravity;
-
-    //바닥에 캐릭터 닿으면 멈추기
-    if (this.y + this.height <= canvasMain.height) {
-      this.yspeed += gravity;
-    } else this.yspeed = 0;
-  },
-};
-
->>>>>>>> CreateUI_newVer:TH/main.js
 //점프기능
 function jumpSkill() {
   //점프시 점프값 증가 & 이미지 변경
@@ -253,10 +191,9 @@ let drawScore = {
   },
 };
 
-<<<<<<<< HEAD:MS/main.js
+<<<<<<<< HEAD: MS / main.js
 //전역변수(frame=프레임, jumpTimer = 점프시간)
 let frame = 0;
-========
 let imgBtn = new Image();
 imgBtn.src = "images/playicon.png";
 let Btn = {
