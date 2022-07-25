@@ -17,12 +17,6 @@ clearJellyImg.src = "images/Jelly/클리어젤리.png";
 let hpPotionImg = new Image();
 hpPotionImg.src = "images/HP/potion.png";
 
-const pointUp = document.getElementById("pointBox");
-let pointHTML = pointUp.innerHTML;
-
-const scoreUp = document.getElementById("endGame_score");
-let scoreHTML = scoreUp.innerHTML;
-
 //젤리 클래스
 class WhiteJelly {
   constructor({ x, y, width, height }) {
@@ -40,95 +34,61 @@ class WhiteJelly {
     return this.eat;
   }
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
+    // this.time++;
+    // if (this.time % 1 == 0) {
+    //   this.x -= 2.35;
+    // }
     ctxMain.drawImage(whiteJellyImg, this.x, this.y, this.width, this.height);
   }
 }
 
 class YellowJelly extends WhiteJelly {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
+    // this.time++;
+    // if (this.time % 1 == 0) {
+    //   this.x -= 2.35;
+    // }
     ctxMain.drawImage(yellowJellyImg, this.x, this.y, this.width, this.height);
   }
 }
 
 class RedJelly extends WhiteJelly {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
+    // this.time++;
+    // if (this.time % 1 == 0) {
+    //   this.x -= 2.35;
+    // }
     ctxMain.drawImage(redJellyImg, this.x, this.y, this.width, this.height);
   }
 }
 
 class BigJelly extends WhiteJelly {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
+    // this.time++;
+    // if (this.time % 1 == 0) {
+    //   this.x -= 2.35;
+    // }
     ctxMain.drawImage(bigJellyImg, this.x, this.y, this.width, this.height);
-  }
-}
-
-class ClearJelly extends WhiteJelly {
-  draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
-    ctxMain.drawImage(clearJellyImg, this.x, this.y, this.width, this.height);
   }
 }
 
 class HpPotion extends WhiteJelly {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
+    // this.time++;
+    // if (this.time % 1 == 0) {
+    //   this.x -= 2.35;
+    // }
     ctxMain.drawImage(hpPotionImg, this.x, this.y, this.width, this.height);
   }
 }
 
-//젤리먹기 함수
-function jellyEat() {
-  for (let i = 0; i < whiteJelly.length; i++) {
-    if (whiteJelly[i].getEater() == false) {
-      whitejellyEat(player, whiteJelly[i]);
-    }
-  }
-  for (let i = 0; i < yellowJelly.length; i++) {
-    if (yellowJelly[i].getEater() == false) {
-      yellowjellyEat(player, yellowJelly[i]);
-    }
-  }
-  for (let i = 0; i < redJelly.length; i++) {
-    if (redJelly[i].getEater() == false) {
-      redjellyEat(player, redJelly[i]);
-    }
-  }
-  for (let i = 0; i < bigJelly.length; i++) {
-    if (bigJelly[i].getEater() == false) {
-      bigjellyEat(player, bigJelly[i]);
-    }
-  }
-  for (let i = 0; i < hpPotion.length; i++) {
-    if (hpPotion[i].getEater() == false) {
-      hppotionEat(player, hpPotion[i]);
-    }
-  }
-  for (let i = 0; i < clearJelly.length; i++) {
-    if (clearJelly[i].getEater() == false) {
-      clearjellyEat(player, clearJelly[i]);
-    }
+class ClearJelly extends WhiteJelly {
+  draw() {
+    // this.time++;
+    // if (this.time % 1 == 0) {
+    //   this.x -= 2.35;
+    // }
+    ctxMain.drawImage(clearJellyImg, this.x, this.y, this.width, this.height);
   }
 }
 
@@ -150,10 +110,7 @@ function whitejellyEat(player, _jelly) {
   ) {
     _jelly.setEater();
     ctxMain.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
-    pointHTML = parseInt(pointHTML) + 1111;
-    scoreHTML = parseInt(scoreHTML) + 1111;
-    pointUp.innerHTML = pointHTML.toLocaleString("ko-KR");
-    scoreUp.innerHTML = scoreHTML.toLocaleString("ko-KR");
+    point += 1111;
   } else if (_jelly.getEater() == false) {
     _jelly.draw();
   }
@@ -175,10 +132,7 @@ function yellowjellyEat(player, _jelly) {
   ) {
     _jelly.setEater();
     ctxMain.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
-    pointHTML = parseInt(pointHTML) + 3333;
-    scoreHTML = parseInt(scoreHTML) + 3333;
-    pointUp.innerHTML = pointHTML.toLocaleString("ko-KR");
-    scoreUp.innerHTML = scoreHTML.toLocaleString("ko-KR");
+    point += 3333;
   } else if (_jelly.getEater() == false) {
     _jelly.draw();
   }
@@ -200,10 +154,7 @@ function redjellyEat(player, _jelly) {
   ) {
     _jelly.setEater();
     ctxMain.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
-    pointHTML = parseInt(pointHTML) + 5555;
-    scoreHTML = parseInt(scoreHTML) + 5555;
-    pointUp.innerHTML = pointHTML.toLocaleString("ko-KR");
-    scoreUp.innerHTML = scoreHTML.toLocaleString("ko-KR");
+    point += 5555;
   } else if (_jelly.getEater() == false) {
     _jelly.draw();
   }
@@ -225,10 +176,7 @@ function bigjellyEat(player, _jelly) {
   ) {
     _jelly.setEater();
     ctxMain.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
-    pointHTML = parseInt(pointHTML) + 33333;
-    scoreHTML = parseInt(scoreHTML) + 33333;
-    pointUp.innerHTML = pointHTML.toLocaleString("ko-KR");
-    scoreUp.innerHTML = scoreHTML.toLocaleString("ko-KR");
+    point += 33333;
   } else if (_jelly.getEater() == false) {
     _jelly.draw();
   }
@@ -251,7 +199,6 @@ function hppotionEat(player, _potion) {
   ) {
     _potion.setEater();
     ctxMain.clearRect(_potion.x, _potion.y, _potion.width, _potion.height);
-    hpRestore();
   } else if (_potion.getEater() == false) {
     _potion.draw();
   }
@@ -263,20 +210,18 @@ function clearjellyEat(player, _jelly) {
   let eatJellyY = _jelly.y - player.y;
   let eatJellyHeight = _jelly.y + _jelly.height - (player.y + player.height);
   if (
-    eatJellyX < 100 &&
-    eatJellyX > -100 &&
-    eatJellyY < 100 &&
-    eatJellyY > -100 &&
-    eatJellyWidth < 100 &&
-    eatJellyWidth > -100 &&
-    eatJellyHeight < 100 &&
-    eatJellyHeight > -100
+    eatJellyX < 55 &&
+    eatJellyX > -55 &&
+    eatJellyY < 55 &&
+    eatJellyY > -55 &&
+    eatJellyWidth < 55 &&
+    eatJellyWidth > -55 &&
+    eatJellyHeight < 55 &&
+    eatJellyHeight > -55
   ) {
     _jelly.setEater();
     ctxMain.clearRect(_jelly.x, _jelly.y, _jelly.width, _jelly.height);
     point += 333333;
-    player.state = "end";
-    gameEnd();
   } else if (_jelly.getEater() == false) {
     _jelly.draw();
   }
@@ -734,6 +679,4 @@ let hpPotion = [
   new HpPotion({ x: 17670, y: 230, width: 40, height: 45 }),
 ];
 
-let clearJelly = [
-  new ClearJelly({ x: 19700, y: 330, width: 200, height: 150 }),
-];
+let clearJelly = new ClearJelly({ x: 19700, y: 330, width: 200, height: 150 });

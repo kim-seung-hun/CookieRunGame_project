@@ -23,32 +23,21 @@ canvasJam.classList.add("jam");
 canvasJam.style.position = "absolute";
 canvasJam.style.left = "27%";
 canvasJam.style.top = "10px";
-canvasJam.style.width = "431px";
+canvasJam.style.width = "430px";
 canvasJam.style.height = "70px";
 document.getElementById("canvasBox").appendChild(canvasJam);
 
 let ctxJam = canvasJam.getContext("2d");
 
+// jam image
 let jamImg = new Image();
 jamImg.src = "images/HP/hp.png";
 function jamDraw() {
   ctxJam.drawImage(jamImg, 35, 30, 233, 50);
 }
 
-// function imgData() {
-//   let imageData = ctxJam.getImageData(35, 30, 233, 50);
-//   let raster = imageData.data;
-
-//   for (let i = 0; i < raster.length; i += 4) {
-//     raster[i] = 60 + raster[i];
-//     raster[i + 1] = 60 + raster[i + 1];
-//     raster[i + 2] = 60 + raster[i + 2];
-//   }
-
-//   ctxJam.putImageData(imageData, 35, 30);
-// }
-
-class Clear {
+// HP decrease
+class HP {
   constructor({ x, y, width, height }) {
     this.x = x;
     this.y = y;
@@ -56,79 +45,114 @@ class Clear {
     this.height = height;
     this.time = 0;
   }
-
-  clearDraw() {
+  // game ~ing
+  draw() {
     this.time++;
     this.x -= 0.05;
-    this.width += 1;
-    if (this.x >= 30) {
+    this.width += 0.05;
+
+    if (this.x >= 34) {
       ctxJam.clearRect(this.x, this.y, this.width, this.height);
-    } else if (this.x < 30) {
+    } else if (this.x < 34) {
       ctxJam.clearRect(35, 30, 233, 50);
-      this.x = 30;
+      this.x = 34;
+      this.width = 238;
+      gameEnd();
     }
-    // console.log(this.x);
   }
 }
 
-class Toggle {
+// HP restore
+function hpRestore() {
+  let state = 10;
+  let add = 0;
+  let set = setInterval(() => {
+    if (state <= add || HpDecrease.x > 267) {
+      clearInterval(set);
+    } else {
+      HpDecrease.x += 0.3;
+      HpDecrease.width -= 0.3;
+      add += 0.1;
+    }
+  }, 1);
+}
+
+// HP remove
+function hpRemove() {
+  HpDecrease.x -= 30;
+  HpDecrease.width += 30;
+
+  for (let i = 0; i < 1000; i++) {
+    setTimeout(() => (canvasJam.style.top = "7px"), 100);
+    setTimeout(() => (canvasJam.style.top = "13px"), 100);
+    setTimeout(() => (canvasJam.style.top = "7px"), 100);
+    setTimeout(() => (canvasJam.style.top = "13px"), 100);
+    setTimeout(() => (canvasJam.style.top = "7px"), 100);
+    setTimeout(() => (canvasJam.style.top = "13px"), 100);
+    setTimeout(() => (canvasJam.style.top = "7px"), 100);
+    setTimeout(() => (canvasJam.style.top = "10px"), 100);
+  }
+}
+
+function gameEnd() {
+  document.getElementById("endGame").style.zIndex = "100";
+}
+
+// HP light
+class Light {
   constructor({ res1, res2 }) {
     this.time = 0;
     this.res1 = res1;
     this.res2 = res2;
+    this.selectres = this.res1;
+    this.switch = false;
   }
 
-  toggle() {
+  draw() {
     let imageData = ctxJam.getImageData(35, 30, 233, 50);
     let raster = imageData.data;
     this.time++;
-    this.res1 -= 1;
-
-    // switch ((this.res1, this.res2)) {
-    //   case "this.res1 > 0":
-    //     for (let i = 0; i < raster.length; i += 4) {
-    //       raster[i] = this.res1 + raster[i];
-    //       raster[i + 1] = this.res1 + raster[i + 1];
-    //       raster[i + 2] = this.res1 + raster[i + 2];
-    //     }
-    //     console.log(this.res1);
-    //     ctxJam.putImageData(imageData, 35, 30);
-
-    //   case "this.res1 <= 0":
-    //     for (let i = 0; i < raster.length; i += 4) {
-    //       raster[i] = this.res2 + raster[i];
-    //       raster[i + 1] = this.res2 + raster[i + 1];
-    //       raster[i + 2] = this.res2 + raster[i + 2];
-    //     }
-    //     console.log(this.res2);
-    //     ctxJam.putImageData(imageData, 35, 30);
-
-    //   default:
-    //     return;
-    // }
-
-    if (this.res1 >= 0) {
-      for (let i = 0; i < raster.length; i += 4) {
-        raster[i] = this.res1 + raster[i];
-        raster[i + 1] = this.res1 + raster[i + 1];
-        raster[i + 2] = this.res1 + raster[i + 2];
+    if (this.selectres == 0) {
+      if (this.selectres < this.res1) {
+        this.selectres += 1;
+        for (let i = 0; i < raster.length; i += 4) {
+          raster[i] = this.selectres + raster[i];
+          raster[i + 1] = this.selectres + raster[i + 1];
+          raster[i + 2] = this.selectres + raster[i + 2];
+        }
+        ctxJam.putImageData(imageData, 35, 30);
+        if (this.selectres == 59) {
+          if (this.switch == true) {
+            this.selectres = this.res2;
+            this.switch = false;
+          } else {
+            this.selectres = this.res1;
+            this.switch = true;
+          }
+        }
       }
-      console.log(this.res1);
-      ctxJam.putImageData(imageData, 35, 30);
-    }
-
-    if (this.res1 < 0) {
-      this.res2 += 1;
-      for (let i = 0; i < raster.length; i += 4) {
-        raster[i] = this.res2 + raster[i];
-        raster[i + 1] = this.res2 + raster[i + 1];
-        raster[i + 2] = this.res2 + raster[i + 2];
+    } else {
+      if (this.selectres > 0) {
+        this.selectres -= 1;
+        for (let i = 0; i < raster.length; i += 4) {
+          raster[i] = this.selectres + raster[i];
+          raster[i + 1] = this.selectres + raster[i + 1];
+          raster[i + 2] = this.selectres + raster[i + 2];
+        }
+        ctxJam.putImageData(imageData, 35, 30);
+        if (this.selectres == 0) {
+          if (this.switch == true) {
+            this.selectres = this.res2;
+            this.switch = false;
+          } else {
+            this.selectres = this.res1;
+            this.switch = true;
+          }
+        }
       }
-      console.log(this.res2);
-      ctxJam.putImageData(imageData, 35, 30);
     }
   }
 }
 
-let clear = new Clear({ x: 268, y: 30, width: 0, height: 50 });
-let toggle = new Toggle({ res1: 60, res2: 0 });
+let HpDecrease = new HP({ x: 268, y: 30, width: 0, height: 50 });
+let HpLight = new Light({ res1: 60, res2: 0 });

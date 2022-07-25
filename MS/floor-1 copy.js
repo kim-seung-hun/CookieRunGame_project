@@ -1,3 +1,11 @@
+// //캔버스 변수 선언, 할당
+let canvasMain = document.getElementById("main");
+let ctxMain = canvasMain.getContext("2d");
+
+// //캔버스 크기
+canvasMain.width = 20000;
+canvasMain.height = 600;
+
 //스테이지 1 바닥땅 이미지
 let floor1_10Img = new Image();
 floor1_10Img.src = "images/Hurdle/floor1_10.png";
@@ -53,120 +61,72 @@ class Floor1_10 {
     this.time = 0;
   }
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(floor1_10Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class Floor1_5 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(floor1_5Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class Floor1_1 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(floor1_1Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class floatFloor1_10 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(_floor1_10Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class floatFloor1_5 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(_floor1_5Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class floatFloor1_1 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(_floor1_1Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class Floor2_10 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(floor2_10Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class Floor2_5 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(floor2_5Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class Floor2_1 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(floor2_1Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class floatFloor2_10 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(_floor2_10Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class floatFloor2_5 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(_floor2_5Img, this.x, this.y, this.width, this.height);
   }
 }
 
 class floatFloor2_1 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(_floor2_1Img, this.x, this.y, this.width, this.height);
   }
 }
@@ -174,10 +134,6 @@ class floatFloor2_1 extends Floor1_10 {
 //안보이는 발판
 class invisualFloor_1 extends Floor1_10 {
   draw() {
-    this.time++;
-    if (this.time % 1 == 0) {
-      this.x -= 2.35;
-    }
     ctxMain.drawImage(
       invisualFloor_1Img,
       this.x,
@@ -213,6 +169,8 @@ let floor = [
 
   new Floor2_1({ x: 12100, y: 510, width: 80, height: 90 }),
 
+  new Floor2_1({ x: 12260, y: 510, width: 80, height: 90 }),
+
   new Floor2_1({ x: 12420, y: 510, width: 80, height: 90 }),
 
   new Floor2_10({ x: 12600, y: 510, width: 800, height: 90 }),
@@ -226,6 +184,8 @@ let floor = [
   new Floor2_10({ x: 16600, y: 510, width: 800, height: 90 }),
 
   new Floor2_1({ x: 17800, y: 510, width: 80, height: 90 }),
+
+  new Floor2_1({ x: 18000, y: 510, width: 80, height: 90 }),
 
   new Floor2_1({ x: 18200, y: 510, width: 80, height: 90 }),
 
@@ -257,7 +217,7 @@ let floatFloor = [
 
   new floatFloor2_1({ x: 10850, y: 370, width: 80, height: 17 }),
 
-  new floatFloor2_1({ x: 11200, y: 420, width: 80, height: 17 }),
+  new floatFloor2_1({ x: 11150, y: 420, width: 80, height: 17 }),
 
   new floatFloor2_1({ x: 11460, y: 450, width: 80, height: 17 }),
 
