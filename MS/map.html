@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #background {
+      position: absolute;
+    }
+    #main {
+      position: absolute;
+    }
+  </style>
+  <body>
+    <canvas id="background"></canvas>
+    <canvas id="main"></canvas>
+  </body>
+  <script src="background copy.js"></script>
+  <script src="floor-1 copy.js"></script>
+  <script src="hurdle-1 copy.js"></script>
+  <script src="jelly-1 copy.js"></script>
+  <script>
+    function mapTest() {
+      requestAnimationFrame(mapTest);
+      background.draw();
+      floor.forEach((floor) => {
+        floor.draw();
+      });
+      floatFloor.forEach((floatFloor) => {
+        floatFloor.draw();
+      });
+      whiteJelly.forEach((whiteJelly) => {
+        whiteJelly.draw();
+      });
+      yellowJelly.forEach((yellowJelly) => {
+        yellowJelly.draw();
+      });
+      redJelly.forEach((redJelly) => {
+        redJelly.draw();
+      });
+      bigJelly.forEach((bigJelly) => {
+        bigJelly.draw();
+      });
+      hpPotion.forEach((hpPotion) => {
+        hpPotion.draw();
+      });
+      hurdle.forEach((hurdle) => {
+        hurdle.draw();
+      });
+      clearJelly.draw();
+    }
+    mapTest();
+  </script>
+</html>

@@ -1,286 +1,302 @@
-
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>회원가입</title>
-        <!--로그인 폼 출처 :
-        https://rpbloggers.com/free-download-html-css-login-form/#google_vignette -->
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-        <!-- <script
+  <head>
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/css/joinMember.css">
+    <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!-- <script
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="form sign-in-container">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+  </head>
 
-                <h1>회원가입</h1>
-                <!-- 이메일 정규식 -->
-                <!-- var regEmail =
+  <body>
+    <div class="container">
+      <div class="form-sign-in-container">
+        <div id="join_title">
+        <h1>회원가입</h1>
+        </div>
+        <!-- 이메일 정규식 -->
+        <!-- var regEmail =
                 /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
                 -->
-                <input type="email" placeholder="이메일" id="id" name="id" class="id">
-                <button id="checkbtn" onclick="checkId()">중복확인</button>
-                <div class="emailcheck"></div>
-                <form action="/kg/signUpPro" method="post">
-                  <input type="hidden" id="hidden_id" name="hiddenId">
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        id="password"
-                        name="password"
-                        class="pw">
-                    <div class="passwordcheck"></div>
-                    <!-- var reg = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$";
-                    비밀번호 -->
-                    <input
-                        type="password"
-                        placeholder="Password Check"
-                        id="password_a"
-                        name="cpassword"
-                        class="pw">
-                    <div class="passwordre"></div>
-                    <input type="text" placeholder="이름" id="name" name="name" class="name">
-                    <div class="namecheck"></div>
-
-                    <input type="date" placeholder="생일" id="birth" name="birth" class="birth">
-
-                    <!-- var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; 휴대폰 번호 정규식
-                    (-상관X) -->
-                    <input
-                        type="text"
-                        placeholder="연락처(-포함 가능)"
-                        id="phoneNum"
-                        name="phoneNum"
-                        class="phoneNum">
-                    <div class="phonecheck"></div>
-                    <button
-                        type="submit"
-                        class="btn"
-                        onclick="console.log('ok') "
-                        disabled="disabled">회원가입</button>
-                    <!-- <input class="btn" type="button" value="회원가입" disabled="disabled"> -->
-                </form>
-            </div>
-            <div class="overlay-container">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-right">
-                        <% if (data=='noCookie'){ %>
-                            <h1>로그인</h1>
-                            <p>이미 계정을 갖고 계신가요?</p>
-                            <button class="signup_btn" onclick="window.location='/kg/login'">로그인</button>
-                            <br/>
-                            <button class="signup_btn" onclick="window.location='/'">홈</button>
-                        <% } else { %>
-                            <form action="/kg/logout" method="get">
-                                <button type="submit">logout</button>
-                            </form>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
+        <!-- 이메일 -->
+        <div class="content">
+        <input type="email" placeholder="이메일" id="id" name="id" class="id" maxlength="50" />
+        <!-- 이메일 중복확인 -->
+        <button class="checkbtn_disable" disabled onclick="checkId()">중복확인</button>
         </div>
+        <!-- 이메일 정규식에 맞게 작성되었는지 check -->
+        <div class="emailcheck textStart"></div>
+        <form action="/kg/signUpPro" method="post">
+          <input type="hidden" id="hidden_id" name="hiddenId" />
+          <!-- 비밀번호 -->
+          <div class="content">
+          <input
+            type="password"
+            placeholder="비밀번호"
+            id="password"
+            name="password"
+            class="id"
+            maxlength="50"
+          />
+          </div>
+          <!-- 비밀번호 정규식에 맞게 작성되었는지 check -->
+          <div class="passwordcheck emailcheck textStart"></div>
+          <!-- var reg = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$";
+                    비밀번호 -->
+            <!-- 비밀번호 확인 -->
+          <div class="content">
+          <input
+            type="password"
+            placeholder="비밀번호 확인"
+            id="password_a"
+            name="cpassword"
+            class="id"
+            maxlength="50"
+          />
+          </div>
+          <!-- 비밀번호 확인 정규식에 맞게 작성되었는지 check -->
+          <div class="passwordre emailcheck textStart"></div>
+          <!-- 이름 -->
+          <div class="content">
+          <input
+            type="text"
+            placeholder="이름"
+            id="name"
+            name="name"
+            class="id"
+            maxlength="10"
+          />
+          </div>
+          <!-- 이름 정규식에 맞게 작성되었는지 check -->
+          <div class="namecheck emailcheck textStart"></div>
 
-        <script>
-            // document.querySelector('#checkbtn').onclick() = function(){   let check =
-            // $('#id').val();   $.ajax({     url : "/",     type : "POST",     data :
-            // {id:check},   }) } document.querySelector('#checkbtn').onclick() = ()=>{
-            // let check = $('#id').val();     $.ajax({       url : "/",       type :
-            // "POST",       data : { id: check },     }) }
-            let idAble = 0;
-            let _iduse = document.querySelector('#id');
-            function checkId() {
-                let check = $('#id').val();
+          <!-- 연락처/생일 -->
+          <div class="content">
+          <!-- var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; 휴대폰 번호 정규식
+                    (-상관X) -->
+          <input
+            type="text"
+            placeholder="연락처(-포함 가능)"
+            id="phoneNum"
+            name="phoneNum"
+            class="phoneNum"
+            maxlength="50"
+          />
+          </div>
+          <!-- 연락처/새일 정규식에 맞게 작성되었는지 check -->
+          <div class="phonecheck emailcheck textStart"></div>
+          <div class="content">
+          <input
+            type="date"
+            id="birth"
+            name="birth"
+            class="birth"
+          />
+          </div>
+          <!-- 회원가입 완료 button -->
+          <button
+            type="submit"
+            class="btn"
+            onclick="console.log('ok') "
+            disabled="disabled"
+          >
+            회원가입 완료
+          </button>
+          <!-- <input class="btn" type="button" value="회원가입" disabled="disabled"> -->
+        </form>
+      </div>
 
-                $.ajax({
-                    url: "/", // /abc라면 메인 홈페이지 / 에서 보낸 값은 /abc 경로에 담기는 개념
-                    type: "POST",
-                    data: {
-                        id: check
-                    },
-                    success: function (data) {
-                        if (data == 'usable') {
-                            if (confirm(
-                                '사용 가능합니다. ' + check + ' 사용 하시겠습니까? \n예 누를 시 수정 불가'
-                            ) == true) {
-                                _iduse.readOnly = true;
-                                document.querySelector('#hidden_id').setAttribute('value',check);
-                            }
-                            idAble = 1;
-                        } else if (data == 'disusable') {
-                            alert('사용 불가');
-                            idAble = 0;
-                            document
-                                .querySelector('.btn')
-                                .disabled = true;
-                        } else {
-                            alert('잘못된 요청입니다.');
-                            idAble = 0;
-                        }
-                    }
-                })
+    <script>
+      // document.querySelector('#checkbtn').onclick() = function(){   let check =
+      // $('#id').val();   $.ajax({     url : "/",     type : "POST",     data :
+      // {id:check},   }) } document.querySelector('#checkbtn').onclick() = ()=>{
+      // let check = $('#id').val();     $.ajax({       url : "/",       type :
+      // "POST",       data : { id: check },     }) }
+      let idAble = 0;
+      let _iduse = document.querySelector("#id");
+      function checkId() {
+        let check = $("#id").val();
 
+        $.ajax({
+          url: "/kg/signup", // /abc라면 메인 홈페이지 / 에서 보낸 값은 /abc 경로에 담기는 개념
+          type: "POST",
+          data: {
+            id: check,
+          },
+          success: function (data) {
+            if (data == "usable") {
+              if (
+                confirm(
+                  "사용 가능합니다. " +
+                    check +
+                    " 사용 하시겠습니까? \n예 누를 시 수정 불가"
+                ) == true
+              ) {
+                _iduse.readOnly = true;
+                document
+                  .querySelector("#hidden_id")
+                  .setAttribute("value", check);
+              }
+              idAble = 1;
+            } else if (data == "disusable") {
+              alert("사용 불가");
+              idAble = 0;
+              document.querySelector(".btn").disabled = true;
+            } else {
+              alert("잘못된 요청입니다.");
+              idAble = 0;
             }
+          },
+        });
+      }
 
-            let a = 0;
-            let b = 0;
-            let c = 0;
-            let d = 0;
-            let e = 0;
-            let sum_ = a + b + c + d + e;
-            document
-                .querySelector('#id')
-                .onkeyup = function () {
-                    let id = this.value;
-                    let idreg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/g;
-                    if (idreg.test(id)) {
-                        document
-                            .querySelector('.emailcheck')
-                            .innerHTML = "사용 가능"
-                        a = 1;
-                        console.log(a)
-                    } else if (id == "") {
-                        document
-                            .querySelector('.emailcheck')
-                            .innerHTML = ""
-                        a = 0;
-                        console.log(a)
-                    } else {
-                        document
-                            .querySelector('.emailcheck')
-                            .innerHTML = "이메일을 입력하세요 ex)rudghks0981@gmail.com"
-                        a = 0;
-                        console.log(a)
-                    }
-                }
-            document
-                .querySelector('#password')
-                .onkeyup = function () {
-                    let password = this.value;
-                    let passwordreg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/g;
-                    if (passwordreg.test(password)) {
-                        document
-                            .querySelector('.passwordcheck')
-                            .innerHTML = "사용 가능"
-                        b = 1;
-                        console.log(b)
-                    } else if (password == "") {
-                        document
-                            .querySelector('.passwordcheck')
-                            .innerHTML = ""
-                        b = 0;
-                        console.log(b)
-                    } else {
-                        document
-                            .querySelector('.passwordcheck')
-                            .innerHTML = "1개이상의 특수문자 대문자 소문자 숫자를 입력하세요"
-                        b = 0;
-                        console.log(b)
-                    }
-                }
-            document
-                .querySelector('#password_a')
-                .onkeyup = function () {
-                    let password_a = this.value;
-                    if (password_a == password.value) {
-                        document
-                            .querySelector('.passwordre')
-                            .innerHTML = "동일합니다."
-                        c = 1;
-                        console.log(c)
-                    } else if (password_a == "") {
-                        document
-                            .querySelector('.passwordre')
-                            .innerHTML = ""
-                        c = 0;
-                        console.log(c)
-                    } else {
-                        document
-                            .querySelector('.passwordre')
-                            .innerHTML = "패스워드가 동일하지 않습니다."
-                        c = 0;
-                        console.log(c)
-                    }
-                }
-            document
-                .querySelector('#name')
-                .onkeyup = function () {
-                    let name = this.value;
-                    let namereg = /^[가-힣a-zA-Z]{2,}$/g;
-                    if (namereg.test(name)) {
-                        document
-                            .querySelector('.namecheck')
-                            .innerHTML = ""
-                        d = 1;
-                        console.log(d)
-                    } else if (name == "") {
-                        document
-                            .querySelector('.namecheck')
-                            .innerHTML = ""
-                        d = 0;
-                        console.log(d);
-                    } else {
-                        document
-                            .querySelector('.namecheck')
-                            .innerHTML = "두글자이상 한글 또는 영문을 입력하세요"
-                        d = 0;
-                        console.log(d);
-                    }
-                }
-            document
-                .querySelector('#phoneNum')
-                .onkeyup = function () {
-                    let phoneNum = this.value;
-                    let phonereg = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/g;
-                    // let phonereg = /^\d{3}-\d{3,4}-\d{4}$/;
-                    if (phonereg.test(phoneNum) || phoneNum == "") {
-                        document
-                            .querySelector('.phonecheck')
-                            .innerHTML = ""
-                        e = 1;
-                        console.log(e)
-                    } else if (phoneNum == "") {
-                        document
-                            .querySelector('.phonecheck')
-                            .innerHTML = ""
-                        e = 0;
-                        console.log(e)
-                    } else {
-                        document
-                            .querySelector('.phonecheck')
-                            .innerHTML = "숫자 및 -만 입력 가능합니다."
-                        e = 0;
-                        console.log(e)
-                    }
-                }
-            console.log(sum_)
-            window.onkeyup = function () {
-                console.log(idAble)
-                if (a == 1 && b == 1 && c == 1 && d == 1 && e == 1 && idAble === 1) {
+      // a ~ e = 1 의 조건이 만족되어야 회원가입 버튼 활성화
+      // 0으로 변수 선언
+      let a = 0;
+      let b = 0;
+      let c = 0;
+      let d = 0;
+      let e = 0;
+      let sum_ = a + b + c + d + e;
+      //이메일 정규식
+      document.querySelector("#id").onkeyup = function () {
+        let id = this.value;
+        let idreg =
+          /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/g;
+        //정규식 Pass
+        if (idreg.test(id)) {
+          document.querySelector(".emailcheck").innerHTML = "";
+          document.querySelector(".checkbtn_disable").disabled = false;
+          document.querySelector(".checkbtn_disable").classList.add("checkbtn_able");
+          a = 1;
+          console.log(a);
+        //정규식 fail
+        } else if (id == "") {
+          document.querySelector(".emailcheck").innerHTML = "";
+          document.querySelector(".checkbtn_disable").disablsed = true;
+          document.querySelector(".checkbtn_disable").classList.remove("checkbtn_able");
+          a = 0;
+          console.log(a);
+        //정규식 fail
+        } else {
+          document.querySelector(".emailcheck").innerHTML =
+            "이메일을 입력하세요 ex)rudghks0981@gmail.com";
+            document.querySelector(".checkbtn_disable").disabled = true;
+            document.querySelector(".checkbtn_disable").classList.remove("checkbtn_able");
+          a = 0;
+          console.log(a);
+        }
+      };
 
-                    document
-                        .querySelector('.btn')
-                        .disabled = false;
-                } else {
-                    document
-                        .querySelector('.btn')
-                        .disabled = true;
-                }
-            }
-            document
-                .querySelector('.btn')
-                .onclick = function () {
-                    alert("회원 가입을 축하합니다.")
-                    window
-                        .location
-                        .reload();
-                }
-            // 내일 물어볼 것 : 패스워드 정규식은 왜 전역변수로 선언시 에러가 발생하는가 여기서 콜백을 써서 동기처리로 하는 방법
-        </script>
-
-    </body>
+      //비밀번호 정규식
+      document.querySelector("#password").onkeyup = function () {
+        let password = this.value;
+        let passwordreg =
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/g;
+        //정규식 Pass
+        if (passwordreg.test(password)) {
+          document.querySelector(".passwordcheck").innerHTML = "";
+          b = 1;
+          console.log(b);
+        //정규식 fail
+        } else if (password == "") {
+          document.querySelector(".passwordcheck").innerHTML = "";
+          b = 0;
+          console.log(b);
+        //정규식 fail
+        } else {
+          document.querySelector(".passwordcheck").innerHTML =
+            "1개이상의 특수문자 대문자 소문자 숫자를 입력하세요";
+          b = 0;
+          console.log(b);
+        }
+      };
+      //비밀번호 확인 정규식
+      document.querySelector("#password_a").onkeyup = function () {
+        let password_a = this.value;
+        //정규식 Pass
+        if (password_a == password.value) {
+          document.querySelector(".passwordre").innerHTML = "";
+          c = 1;
+          console.log(c);
+        //정규식 fail
+        } else if (password_a == "") {
+          document.querySelector(".passwordre").innerHTML = "";
+          c = 0;
+          console.log(c);
+        //정규식 fail
+        } else {
+          document.querySelector(".passwordre").innerHTML =
+            "패스워드가 동일하지 않습니다.";
+          c = 0;
+          console.log(c);
+        }
+      };
+      //이름 정규식
+      document.querySelector("#name").onkeyup = function () {
+        let name = this.value;
+        let namereg = /^[가-힣]{2,6}$/g;
+        //정규식 Pass
+        if (namereg.test(name)) {
+          document.querySelector(".namecheck").innerHTML = "";
+          d = 1;
+          console.log(d);
+        //정규식 fail
+        } else if (name == "") {
+          document.querySelector(".namecheck").innerHTML = "";
+          d = 0;
+          console.log(d);
+        //정규식 fail
+        } else {
+          document.querySelector(".namecheck").innerHTML =
+            "두글자이상 한글을 입력하세요";
+          d = 0;
+          console.log(d);
+        }
+      };
+      //핸드폰 정규식
+      document.querySelector("#phoneNum").onkeyup = function () {
+        let phoneNum = this.value;
+        let phonereg = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/g;
+        // let phonereg = /^\d{3}-\d{3,4}-\d{4}$/;
+        //정규식 Pass
+        if (phonereg.test(phoneNum) || phoneNum == "") {
+          document.querySelector(".phonecheck").innerHTML = "";
+          e = 1;
+          console.log(e);
+        //정규식 fail
+        } else if (phoneNum == "") {
+          document.querySelector(".phonecheck").innerHTML = "";
+          e = 0;
+          console.log(e);
+        //정규식 fail
+        } else {
+          document.querySelector(".phonecheck").innerHTML =
+            "숫자 및 -만 입력 가능합니다.";
+          e = 0;
+          console.log(e);
+        }
+      };
+      console.log(sum_);
+      window.onkeyup = function () {
+        console.log(idAble);
+        // 서버통신을 위해 <&& idAble === 1> 추가해야함
+        if (a == 1 && b == 1 && c == 1 && d == 1 && e == 1) {
+          document.querySelector(".btn").disabled = false;
+        } else {
+          document.querySelector(".btn").disabled = true;
+        }
+      };
+      //버튼 click시 게임 실행
+      document.querySelector(".btn").onclick = function () {
+        alert("회원 가입을 축하합니다.");
+      };
+      // 내일 물어볼 것 : 패스워드 정규식은 왜 전역변수로 선언시 에러가 발생하는가 여기서 콜백을 써서 동기처리로 하는 방법
+    </script>
+  </body>
 </html>
