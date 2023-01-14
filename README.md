@@ -19,3 +19,5 @@
 
 ### 3. 게임화면
 ----------------------
+
+<img width="1251" alt="스크린샷 2023-01-14 오후 3 20 46" src="https://user-images.githubusercontent.com/107898063/212459052-19a8373a-f595-4e9d-9ce2-60d8cc939fa8.png">
