@@ -6,4 +6,4 @@
 ### 사용기술
 -----------------------
 
-***banilla javascript***
+- **banilla javascript**
