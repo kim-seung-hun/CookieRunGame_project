@@ -82,6 +82,7 @@ function hpRemove() {
   HpDecrease.x -= 30;
   HpDecrease.width += 30;
 
+  // HP crash action
   for (let i = 0; i < 1000; i++) {
     setTimeout(() => (canvasJam.style.top = "7px"), 100);
     setTimeout(() => (canvasJam.style.top = "13px"), 100);

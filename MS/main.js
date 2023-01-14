@@ -30,13 +30,6 @@ let player = {
         this.index = 0;
       }
     }
-    //히트박스 설정
-    // ctxMain.fillStyle = "green";
-    // ctxMain.fillRect(this.x, this.y, this.width, this.height);
-    //포인트박스 설정
-    // ctxMain.fillStyle = "yellow";
-    // ctxMain.fillRect(this.x + 17, this.y + 20, 50, 50);
-    //조건 ? 맞는거 : 틀린거
     ctxMain.drawImage(
       this.state == "run"
         ? runPlayer[this.index]
@@ -72,7 +65,6 @@ let player = {
 
     //땅에 붙으면 하락값 0
     for (let i = 0; i < floor.length; i++)
-      // hi();
       if (
         this.y + this.height > canvasMain.height + 100 &&
         player.state == "run"
@@ -278,7 +270,7 @@ function TopHurdle() {
       console.log("충돌");
       player.state = "coll";
       a = false;
-      hpRemove()
+      hpRemove();
       let hi = setInterval(() => {
         a = false;
         player.state = "coll";
@@ -523,7 +515,6 @@ function game() {
     }
   }
 
-
   jellyEat();
   jumpSkill();
 
@@ -556,7 +547,7 @@ function game() {
   MiddleHurdle();
 
   if (floor[26].x < 0) {
-    floor[26].x = 0;    
+    floor[26].x = 0;
   }
 }
 
@@ -566,11 +557,10 @@ document.getElementById("gmes").onclick = function () {
 };
 
 let test = function () {
-  if (test !== null)
-  {
-    document.getElementById("tutorial").style.zIndex = "-99";  
+  if (test !== null) {
+    document.getElementById("tutorial").style.zIndex = "-99";
     game();
   }
   test = null;
-}
+};
 document.getElementById("tutorial").onclick = test;
