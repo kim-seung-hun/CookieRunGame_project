@@ -2,4 +2,4 @@
 
 # 웹 쿠키런
 
-- 사용기술 : banilla javascript , canvas
+- 사용기술 : banilla javascript
