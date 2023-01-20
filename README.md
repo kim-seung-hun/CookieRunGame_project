@@ -9,7 +9,7 @@
 
 ### 1. 사용기술
 -----------------------
-- **banilla javascript**
+- **vanilla javascript**
 <br/>
 
 ### 2. 게임방법
